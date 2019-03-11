@@ -8,7 +8,7 @@ const productSchema = new Schema({
     quantity: {type: Number, require: true},
     category: {type: String, requre: true},
     subCategory: {type: String, require: false},
-    manufacture: {type: String, requre: false}
+    manufacture: {type: String, requre: false},
 });
 
 module.exports = model('User', productSchema);

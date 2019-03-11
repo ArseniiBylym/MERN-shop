@@ -28,6 +28,7 @@
                 "allowTemplateLiterals": true
             }
         ],
+        "quote-props": ["error", "as-needed"],
         "arrow-parens": ["error", "as-needed"],
         "consistent-return": ["off"],
         "object-curly-spacing": ["error", "never"],
@@ -50,6 +51,8 @@
             }
         ],
         "no-template-curly-in-string": "error",
-        "no-unused-vars": ["warn"]
+        "no-unused-vars": ["warn"],
+        "prefer-destructuring": "off",
+        "no-underscore-dangle": "off"
     }
 }

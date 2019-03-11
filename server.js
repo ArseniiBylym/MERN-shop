@@ -10,9 +10,11 @@ const app = express();
 // Middlevares
 app.use(morgan('tiny'));
 app.use(express.json());
-
-app.use('/', (req, res) => {
-    res.send('Hello from server');
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
 });
 
 // Serve static assets if in production
@@ -24,6 +26,17 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+// Main routes
+app.use('/api/user', require('./routes/user'));
+// app.use('/api/product', require('./routes/product'));
+// app.use('/api/services', require('./routes/services'));
+
+// Error handling
+app.use((error, req, res) => {
+    console.log(error);
+    const {statusCode = 500, message, data} = error;
+    res.status(statusCode).json({message, data});
+});
 mongoose
     .connect(MONGO_DB_URI, {useNewUrlParser: true})
     .then(() => {
