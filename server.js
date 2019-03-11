@@ -28,12 +28,12 @@ if (process.env.NODE_ENV === 'production') {
 
 // Main routes
 app.use('/api/user', require('./routes/user'));
-// app.use('/api/product', require('./routes/product'));
+app.use('/api/product', require('./routes/product'));
 // app.use('/api/services', require('./routes/services'));
 
 // Error handling
-app.use((error, req, res) => {
-    console.log(error);
+app.use((error, req, res, next) => {
+    // console.log(error);
     const {statusCode = 500, message, data} = error;
     res.status(statusCode).json({message, data});
 });

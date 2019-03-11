@@ -11,7 +11,7 @@ const User = require('../models/User');
 exports.getUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id).select({password: 0});
-        res.json(user);
+        res.status(200).json(user);
     } catch (error) {
         error.message = `Can't get user data from database`;
         next(error);

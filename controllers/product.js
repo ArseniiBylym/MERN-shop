@@ -1,0 +1,84 @@
+const {validationResult} = require('express-validator/check');
+
+const Product = require('../models/Product');
+
+// @route   GET api/product
+// @desc    Get all products
+// @access  Public
+exports.getProduct = async (req, res, next) => {
+    const {category, subcategory} = req.query;
+    let products = [];
+    let totalCount = 0;
+    try {
+        if (category && subcategory) {
+            products = await Product.find({category, subcategory}).select({name: 1, price: 1, imgUrl: 1, category: 1, subcategory: 1});
+            totalCount = await Product.find({category, subcategory}).countDocuments();
+        } else if (category && !subcategory) {
+            products = await Product.find({category}).select({name: 1, price: 1, imgUrl: 1, category: 1});
+            totalCount = await Product.find({category}).countDocuments();
+        } else {
+            products = await Product.find().select({name: 1, price: 1, imgUrl: 1});
+            totalCount = await Product.find().countDocuments();
+        }
+        res.status(200).json({products, totalCount});
+    } catch (error) {
+        error.message = `Can't get product data from database`;
+        next(error);
+    }
+};
+
+exports.getProductDetails = async (req, res, next) => {
+    const {prodId} = req.params;
+    try {
+        const product = await Product.findById(prodId);
+        if (!product) {
+            const error = new Error();
+            error.statusCode = 400;
+            throw error;
+        }
+        return res.status(200).json(product);
+    } catch (error) {
+        error.message = `Can't get product details data from database`;
+        next(error);
+    }
+};
+
+exports.createProduct = async (req, res, next) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+        return res.status(400).json({msg: `Product can not be created, validation failed`, errors: validationErrors.array()});
+    }
+    const product = new Product({...req.body});
+
+    try {
+        const result = await product.save();
+        res.status(201).json({msg: `New product was successfully created`, product: result._doc});
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.updateProduct = async (req, res, next) => {
+    const {prodId} = req.params;
+    try {
+        const product = await Product.findById(prodId).select({__v: 0});
+        Object.keys(product._doc).forEach(key => {
+            if (req.body[key]) product[key] = req.body[key];
+        });
+        // const updatedProduct = await Product.findOneAndUpdate(prodId, product, {new: true});
+        const updatedProduct = await product.save();
+        return res.status(200).json({msg: `New product was successfully updated`, product: updatedProduct});
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.deleteProduct = async (req, res, next) => {
+    const {prodId} = req.params;
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(prodId);
+        res.status(200).json({msg: `Product was successfully deleted`, id: deletedProduct.id});
+    } catch (error) {
+        next(error);
+    }
+};
