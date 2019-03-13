@@ -9,7 +9,10 @@ router.get('/', productController.getProduct);
 router.get('/:prodId', productController.getProductDetails);
 
 router.post('/', isAuth, productCreateValidation, productController.createProduct);
+
+router.put('/comment', isAuth, productController.addComment);
 router.put('/:prodId', isAuth, productController.updateProduct);
+
 router.delete('/:prodId', isAuth, productController.deleteProduct);
 
 module.exports = router;

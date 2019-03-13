@@ -30,7 +30,7 @@ exports.getProduct = async (req, res, next) => {
 exports.getProductDetails = async (req, res, next) => {
     const {prodId} = req.params;
     try {
-        const product = await Product.findById(prodId);
+        const product = await Product.findById(prodId).populate('reviews.author', 'name');
         if (!product) {
             const error = new Error();
             error.statusCode = 400;
@@ -78,6 +78,36 @@ exports.deleteProduct = async (req, res, next) => {
     try {
         const deletedProduct = await Product.findByIdAndDelete(prodId);
         res.status(200).json({msg: `Product was successfully deleted`, id: deletedProduct.id});
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.addComment = async (req, res, next) => {
+    const userId = req.user.id;
+    const {productId, comment} = req.body;
+
+    if (!productId && !comment) {
+        return res.status(400).json({msg: `ProductId and comment are required`});
+    }
+    try {
+        const product = await Product.findById(productId);
+        const author = product.reviews.find(item => {
+            return item.author.toString() === userId.toString();
+        });
+        if (author) {
+            return res.status(400).json({msg: `User alredy leaved his comment`});
+        }
+        if (!product) throw new Error(`Product not found`);
+        const newComment = {
+            author: userId,
+            date: new Date(),
+            text: comment.text,
+            raiting: comment.raiting,
+        };
+        product.reviews.push(newComment);
+        const updatedProduct = product.save();
+        return res.status(200).json({msg: `Added comment to the product`, data: {productId, comment}});
     } catch (error) {
         next(error);
     }

@@ -10,18 +10,14 @@ const productSchema = new Schema({
     subcategory: {type: String, require: false},
     manufacture: {type: String, requre: false},
     imgUrl: {type: String, require: false},
-    reviews: {
-        type: [
-            {
-                author: {type: String, require: true},
-                date: {type: Date, require: true},
-                text: {type: String, reqire: true},
-                rating: {type: Number, require: false},
-            },
-        ],
-        require: false,
-        default: [],
-    },
+    reviews: [
+        {
+            author: {type: Schema.Types.ObjectId, ref: 'User', require: true},
+            date: {type: Date, require: true},
+            text: {type: String, reqire: true},
+            rating: {type: Number, require: false},
+        },
+    ],
 });
 
 module.exports = model('Product', productSchema);
