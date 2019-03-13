@@ -106,7 +106,7 @@ exports.addComment = async (req, res, next) => {
             raiting: comment.raiting,
         };
         product.reviews.push(newComment);
-        const updatedProduct = product.save();
+        const updatedProduct = await product.save();
         return res.status(200).json({msg: `Added comment to the product`, data: {productId, comment}});
     } catch (error) {
         next(error);

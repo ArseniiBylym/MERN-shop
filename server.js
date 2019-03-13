@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api/user', require('./routes/user'));
 app.use('/api/product', require('./routes/product'));
 app.use('/api/service', require('./routes/service'));
+app.use('/api/order', require('./routes/order'));
 
 // Error handling
 app.use((error, req, res, next) => {
