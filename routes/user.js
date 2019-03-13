@@ -6,7 +6,7 @@ const {loginValidation, signupValidation} = require('../middlewares/validators')
 const router = Router();
 
 router.get('/', isAuth, userController.getUser);
-router.post('/', loginValidation, userController.loginUser);
+router.post('/login', loginValidation, userController.loginUser);
 router.post('/signup', signupValidation, userController.signupUser);
 
 module.exports = router;

@@ -8,7 +8,7 @@ const {MONGO_DB_URI} = process.env;
 const app = express();
 
 // Middlevares
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 app.use(express.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 // Main routes
 app.use('/api/user', require('./routes/user'));
 app.use('/api/product', require('./routes/product'));
-// app.use('/api/services', require('./routes/services'));
+app.use('/api/service', require('./routes/service'));
 
 // Error handling
 app.use((error, req, res, next) => {

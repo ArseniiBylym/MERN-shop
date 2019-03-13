@@ -10,7 +10,8 @@ const User = require('../models/User');
 // @access  Private
 exports.getUser = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.id).select({password: 0});
+        // const user = await User.findById(req.user.id).select({password: 0});
+        const user = await User.findById(req.user.id).select('-password -__v');
         res.status(200).json(user);
     } catch (error) {
         error.message = `Can't get user data from database`;
@@ -42,19 +43,19 @@ exports.signupUser = async (req, res, next) => {
             password: hashedPassword,
         });
 
-        const savedUser = await newUser.save();
+        const user = await newUser.save();
         const token = jwt.sign(
             {
-                email: savedUser.email,
-                id: savedUser._id.toString(),
+                email: user.email,
+                id: user._id.toString(),
             },
             process.env.JWT_SECRET_KEY,
-            {expiresIn: '1h'},
+            {expiresIn: '1d'},
         );
-        return res.status(201).json({
-            token,
-            user: objectWithoutKeys(savedUser._doc, ['password', '__v']),
-        });
+
+        user.password = undefined;
+        user.__v = undefined;
+        return res.status(201).json({token, user});
     } catch (error) {
         next(error);
     }
@@ -71,7 +72,7 @@ exports.loginUser = async (req, res, next) => {
     const {email, password} = req.body;
 
     try {
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).exec();
         if (!user) {
             const error = new Error(`Wrong email`);
             error.statusCode = 400;
@@ -89,15 +90,15 @@ exports.loginUser = async (req, res, next) => {
             {
                 email: user.email,
                 id: user._id.toString(),
+                isAdmin: user.isAdmin,
             },
             process.env.JWT_SECRET_KEY,
-            {expiresIn: '1h'},
+            {expiresIn: '1d'},
         );
 
-        res.status(200).json({
-            token,
-            user: objectWithoutKeys(user._doc, ['password', '__v']),
-        });
+        user.password = undefined;
+        user.__v = undefined;
+        res.status(200).json({token, user});
     } catch (error) {
         next(error);
     }
