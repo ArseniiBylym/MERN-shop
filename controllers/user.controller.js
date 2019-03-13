@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {objectWithoutKeys} = require('../utils/helpers');
 
-const User = require('../models/User');
+const User = require('../models/User.model');
 
 // @route   GET api/user
 // @desc    Get user data

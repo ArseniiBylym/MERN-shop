@@ -1,7 +1,7 @@
 const path = require(`path`);
 const express = require('express');
 const mongoose = require('mongoose');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 require('dotenv').config();
 
 const {MONGO_DB_URI} = process.env;
@@ -29,11 +29,12 @@ if (process.env.NODE_ENV === 'production') {
 // Main routes
 app.use('/api/user', require('./routes/user'));
 app.use('/api/product', require('./routes/product'));
+app.use('/api/product-category', require('./routes/productCategory'));
 app.use('/api/service', require('./routes/service'));
 app.use('/api/order', require('./routes/order'));
 
 // Error handling
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
     // console.log(error);
     const {statusCode = 500, message, data} = error;
     res.status(statusCode).json({message, data});

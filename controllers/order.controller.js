@@ -1,4 +1,4 @@
-const Order = require('../models/Order');
+const Order = require('../models/Order.model');
 
 exports.getOrder = async (req, res, next) => {
     const {isAdmin} = req.user;
