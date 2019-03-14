@@ -1,17 +1,5 @@
 const {body} = require('express-validator/check');
 
-exports.loginValidation = [
-    body('email')
-        .exists()
-        .trim()
-        .isEmail()
-        .withMessage(`Email is not correct`),
-    body('password')
-        .trim()
-        .isLength({min: 3})
-        .withMessage(`Password should contains 3 symbols at least`),
-];
-
 exports.signupValidation = [
     body('name')
         .exists()
@@ -22,7 +10,7 @@ exports.signupValidation = [
         .exists()
         .trim()
         .isEmail()
-        .withMessage(`Email is required`),
+        .withMessage(`Email is required and should be a valid email`),
     body('password')
         .trim()
         .isLength({min: 3})

@@ -1,7 +1,7 @@
 const {validationResult} = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {objectWithoutKeys} = require('../utils/helpers');
+const {errorHandler, errorValidationHandlerMap} = require('../utils/helpers');
 
 const User = require('../models/User.model');
 
@@ -12,9 +12,9 @@ exports.getUser = async (req, res, next) => {
     try {
         // const user = await User.findById(req.user.id).select({password: 0});
         const user = await User.findById(req.user.id).select('-password -__v');
+        if (!user) throw new Error(`User not found`);
         res.status(200).json(user);
     } catch (error) {
-        error.message = `Can't get user data from database`;
         next(error);
     }
 };
@@ -23,19 +23,20 @@ exports.getUser = async (req, res, next) => {
 // @desc    POST create new user
 // @access  Public
 exports.signupUser = async (req, res, next) => {
-    const validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        return res.status(400).json({msg: `Validation failed`, errors: validationErrors.array()});
-    }
-    const {name, email, password} = req.body;
-
     try {
-        const existedUser = await User.findOne({email});
-        if (existedUser) {
-            const error = new Error(`User already exists`);
-            error.statusCode = 400;
-            throw error;
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+            errorHandler(`Validation failed`, 400, errorValidationHandlerMap(validationErrors.array()));
         }
+        const {name, email, password} = req.body;
+
+        const existedUser = await User.findOne({email});
+        if (existedUser) errorHandler(`User already exists`, 400);
+        // {
+        //     const error = new Error(`User already exists`);
+        //     error.statusCode = 400;
+        //     throw error;
+        // }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             name,
@@ -65,26 +66,14 @@ exports.signupUser = async (req, res, next) => {
 // @desc    POST login user
 // @access  Public
 exports.loginUser = async (req, res, next) => {
-    const validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        return res.status(400).json({msg: `Validation failed`, errors: validationErrors.array()});
-    }
     const {email, password} = req.body;
 
     try {
         const user = await User.findOne({email}).exec();
-        if (!user) {
-            const error = new Error(`Wrong email`);
-            error.statusCode = 400;
-            throw error;
-        }
+        if (!user) errorHandler(`Wrong email`, 400, [{field: 'email', errorMessage: 'Wrong email'}]);
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            const error = new Error('Wrong password');
-            error.statusCode = 400;
-            throw error;
-        }
+        if (!isPasswordMatch) errorHandler(`Wrong password`, 400, [{field: 'password', errorMessage: 'Wrong password'}]);
 
         const token = jwt.sign(
             {
@@ -99,7 +88,7 @@ exports.loginUser = async (req, res, next) => {
         user.password = undefined;
         user.__v = undefined;
         res.status(200).json({token, user});
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };

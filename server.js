@@ -34,11 +34,13 @@ app.use('/api/service', require('./routes/service'));
 app.use('/api/order', require('./routes/order'));
 
 // Error handling
-app.use((error, req, res) => {
-    // console.log(error);
-    const {statusCode = 500, message, data} = error;
-    res.status(statusCode).json({message, data});
+
+app.use((err, req, res, next) => {
+    console.log(err);
+    const {statusCode = 500, message, errors} = err;
+    return res.status(statusCode).json({message, errors});
 });
+
 mongoose
     .connect(MONGO_DB_URI, {useNewUrlParser: true})
     .then(() => {

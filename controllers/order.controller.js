@@ -3,7 +3,6 @@ const Order = require('../models/Order.model');
 exports.getOrder = async (req, res, next) => {
     const {isAdmin} = req.user;
     const {customerId} = req.query;
-    console.log(customerId);
     let order = [];
     try {
         if (!isAdmin && !customerId) {
@@ -14,7 +13,6 @@ exports.getOrder = async (req, res, next) => {
                 .populate('customer', 'name email')
                 .populate('productList.id', 'name price');
         } else if (customerId) {
-            console.log(customerId, req.user.id.toString());
             if (customerId.toString() !== req.user.id.toString()) {
                 return res.status(405).json({msg: `Access denied`});
             }
