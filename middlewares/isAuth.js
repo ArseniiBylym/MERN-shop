@@ -5,7 +5,7 @@ const auth = (req, res, next) => {
     if (token) {
         token = token.split(' ')[1];
     } else {
-        return res.status(401).json({msj: `No token, authorization denied`});
+        return res.status(401).json({message: `No token, authorization denied`});
     }
 
     try {
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
         req.user = decodedToken;
         next();
     } catch (error) {
-        res.status(400).json({msj: `Invalid token, authorization denied`});
+        res.status(400).json({message: `Invalid token, authorization denied`});
     }
 };
 

@@ -3,8 +3,8 @@ const Service = require('../models/Service.model');
 exports.getService = async (req, res, next) => {
     try {
         const service = await Service.find();
-        if (!service) throw new Error('No services');
-        res.status(200).json({msg: `Service list`, service});
+        if (!service) throw new Error('No services found');
+        res.status(200).json({message: `Service list`, service});
     } catch (error) {
         next(error);
     }
@@ -37,7 +37,7 @@ exports.deleteService = async (req, res, next) => {
                 return item.id.toString() !== serviceItemId;
             });
             const updatedService = await service.save();
-            return res.status(200).json({msg: `Service was successfully deleted`, id: serviceItemId});
+            return res.status(200).json({message: `Service was successfully deleted`, id: serviceItemId});
         } catch (error) {
             error.message = `Service deteting failed`;
             next(error);
@@ -45,7 +45,7 @@ exports.deleteService = async (req, res, next) => {
     }
     try {
         const service = await Service.findByIdAndDelete(serviceId);
-        return res.status(200).json({msg: `Service was successfully deleted`, id: serviceId});
+        return res.status(200).json({message: `Service was successfully deleted`, id: serviceId});
     } catch (error) {
         error.message = `Service deleting failed`;
         next(error);

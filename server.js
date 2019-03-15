@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 // const morgan = require('morgan');
 require('dotenv').config();
+const {red} = require('colors/safe');
 
 const {MONGO_DB_URI} = process.env;
 const app = express();
@@ -36,7 +37,7 @@ app.use('/api/order', require('./routes/order'));
 // Error handling
 
 app.use((err, req, res, next) => {
-    console.log(err);
+    console.log(red(err));
     const {statusCode = 500, message, errors} = err;
     return res.status(statusCode).json({message, errors});
 });

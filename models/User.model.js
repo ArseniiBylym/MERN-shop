@@ -17,7 +17,6 @@ const userSchema = new Schema({
     password: {type: String, require: true},
     isAdmin: {type: Boolean, require: true, default: false},
     isBanned: {type: Boolean, require: true, default: false},
-    cart: {type: Array, require: true, default: []},
     refreshToken: {type: String, require: false},
 });
 

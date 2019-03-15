@@ -8,7 +8,5 @@ const router = Router();
 router.get('/', serviceController.getService);
 router.post('/', isAuth, isAdmin, serviceController.postService);
 router.delete('/', isAuth, isAdmin, serviceController.deleteService);
-// router.delete('/:serviceId', isAuth, isAdmin, serviceController.deleteService);
-// router.delete('/:serviceId/:serviceItemId', isAuth, isAdmin, serviceController.deleteService);
 
 module.exports = router;
