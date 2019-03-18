@@ -11,6 +11,7 @@ const auth = (req, res, next) => {
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
         req.user = decodedToken;
+        req.token = token;
         next();
     } catch (error) {
         res.status(400).json({message: `Invalid token, authorization denied`});

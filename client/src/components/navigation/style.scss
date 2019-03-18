@@ -1,0 +1,8 @@
+.NavBar {
+    position: relative;
+    &__adminControl {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

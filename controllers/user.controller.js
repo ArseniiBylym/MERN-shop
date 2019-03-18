@@ -11,9 +11,10 @@ const User = require('../models/User.model');
 exports.getUser = async (req, res, next) => {
     try {
         // const user = await User.findById(req.user.id).select({password: 0});
+        const token = req.token;
         const user = await User.findById(req.user.id).select('-password -__v');
         if (!user) throw new Error(`User not found`);
-        res.status(200).json(user);
+        res.status(200).json({token, user});
     } catch (error) {
         error.statusCode = 404;
         next(error);
@@ -32,7 +33,10 @@ exports.signupUser = async (req, res, next) => {
         const {name, email, password} = req.body;
 
         const existedUser = await User.findOne({email});
-        if (existedUser) errorHandler(`User already exists`, 400);
+        if (existedUser) {
+            return res.status(400).json({message: 'User already exists', errors: [{field: 'email', errorMessage: 'User already exists'}]})
+        }
+        // if (existedUser) errorHandler(`User already exists`, 400);
         // {
         //     const error = new Error(`User already exists`);
         //     error.statusCode = 400;
