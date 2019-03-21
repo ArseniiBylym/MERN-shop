@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', productController.getProduct);
 router.get('/:prodId', productController.getProductDetails);
 
-router.post('/', isAuth, productCreateValidation, productController.createProduct);
+router.post('/', isAuth, productController.createProduct);
 
 router.put('/comment', isAuth, productController.addComment);
 router.put('/:prodId', isAuth, productController.updateProduct);

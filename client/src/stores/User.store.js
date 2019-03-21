@@ -5,6 +5,10 @@ export class User {
     get isAuth() {
         return !!this.user.email;
     }
+    get isAdmin() {
+        if (!this.user) return false;
+        return !!this.user.isAdmin;
+    }
     dataFetched = false;
     fetchingInProgress = false;
     fetchingError = null;

@@ -16,6 +16,7 @@ code {
 }
 
 a {
+  color: rgb(26, 26, 26);
   text-decoration: none;
   border-bottom: 1px solid transparent;
 
@@ -30,4 +31,38 @@ a {
 
 .form-control.is-invalid {
   background-image: none;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.transparent-screen{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 1;
+}
+.position-realative{
+  position: relative;
+}
+.text-crossed{
+  text-decoration: line-through;
+}
+.saleLabel{
+  color: red;
+  padding: 0 15px;
+  border: 1px solid red;
+  border-radius: 5px;
+  text-transform: uppercase;
+  z-index: 1;
+  position: absolute;
+  font-size: 14px;
+
+  &__topLeft{
+    top: 15px;
+    left: 5px;
+    transform: rotate(-20deg)
+  }
 }

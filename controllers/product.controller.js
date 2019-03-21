@@ -6,18 +6,18 @@ const Product = require('../models/Product.model');
 // @desc    Get all products
 // @access  Public
 exports.getProduct = async (req, res, next) => {
-    const {category, subcategory} = req.query;
+    const {category, subCategory} = req.query;
     let products = [];
     let totalCount = 0;
     try {
-        if (category && subcategory) {
-            products = await Product.find({category, subcategory}).select({name: 1, price: 1, imgUrl: 1, category: 1, subcategory: 1});
-            totalCount = await Product.find({category, subcategory}).countDocuments();
-        } else if (category && !subcategory) {
-            products = await Product.find({category}).select({name: 1, price: 1, imgUrl: 1, category: 1});
+        if (category && subCategory) {
+            products = await Product.find({category, subCategory}).select({name: 1, price: 1, salePrice: 1, imageUrl: 1, category: 1, subCategory: 1});
+            totalCount = await Product.find({category, subCategory}).countDocuments();
+        } else if (category && !subCategory) {
+            products = await Product.find({category}).select({name: 1, price: 1, imageUrl: 1, category: 1});
             totalCount = await Product.find({category}).countDocuments();
         } else {
-            products = await Product.find().select({name: 1, price: 1, imgUrl: 1});
+            products = await Product.find().select({name: 1, price: 1, imageUrl: 1});
             totalCount = await Product.find().countDocuments();
         }
         res.status(200).json({products, totalCount});
@@ -96,7 +96,7 @@ exports.addComment = async (req, res, next) => {
             return item.author.toString() === userId.toString();
         });
         if (author) {
-            return res.status(400).json({msg: `User alredy leaved his comment`});
+            return res.status(400).json({msg: `User alredy added his comment`});
         }
         if (!product) throw new Error(`Product not found`);
         const newComment = {
@@ -107,7 +107,7 @@ exports.addComment = async (req, res, next) => {
         };
         product.reviews.push(newComment);
         const updatedProduct = await product.save();
-        return res.status(200).json({msg: `Added comment to the product`, data: {productId, comment}});
+        return res.status(200).json({msg: `Added comment to the product`, data: newComment});
     } catch (error) {
         next(error);
     }

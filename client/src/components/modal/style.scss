@@ -1,0 +1,15 @@
+.icon-close-round{
+    position: absolute;
+    font-size: 40px;
+    cursor: pointer;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+    svg {
+        display: block;
+    }
+}
+.full-size-picture {
+    max-width: 95%;
+    margin: auto;
+}

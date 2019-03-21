@@ -1,15 +1,9 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState} from 'react';
 
 export const SearchInput = props => {
     const [input, setInput] = useState('');
 
-    useEffect(() => {
-        console.log(input);
-    }, [input]);
-
-    const clickHandler = () => {
-        console.log('click');
-    };
+    const clickHandler = () => {};
 
     const keyUpHandler = e => {
         if (e.keyCode === 13) {

@@ -3,12 +3,11 @@ import {observer} from 'mobx-react-lite';
 import './style.scss';
 import {Link} from 'react-router-dom';
 import {FaCartPlus} from 'react-icons/fa';
-import {observable} from 'mobx';
+import {IoIosLogIn, IoIosLogOut} from 'react-icons/io';
 import {SearchInput} from '../form';
 import {UserAction} from '../../actions';
 
 export const MainHeader = observer(({store}) => {
-    console.log(store);
     return (
         <div className="MainHeader container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-between">
@@ -49,12 +48,18 @@ export const MainHeader = observer(({store}) => {
                         </p>
                     </button>
                     {store.user ? (
-                        <button onClick={UserAction.logoutUser} className="loginButton btn btn-secondary">
-                            Logout
+                        <button onClick={UserAction.logoutUser} className="loginButton btn mb-0">
+                            <span className="h3">
+                                <IoIosLogOut />
+                            </span>
                         </button>
                     ) : (
                         <Link to="/login">
-                            <button className="loginButton btn btn-secondary">Login</button>
+                            <button className="loginButton btn mb-0">
+                                <span className="h3">
+                                    <IoIosLogIn />
+                                </span>
+                            </button>
                         </Link>
                     )}
                 </div>

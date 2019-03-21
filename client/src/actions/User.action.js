@@ -7,7 +7,6 @@ export class User {
         try {
             UserStore.fetchingInProgress = true;
             const response = await fetchApi.get(URL_PATH.USER, true);
-            console.log(response);
             localStorage.setItem('userToken', response.data.token);
             UserStore.user = response.data.user;
             UserStore.fetchingInProgress = false;
@@ -26,7 +25,6 @@ export class User {
             UserStore.loginError = null;
             UserStore.fetchingInProgress = true;
             const response = await fetchApi.post(URL_PATH.LOGIN, data);
-            console.log(response);
             localStorage.setItem('userToken', response.data.token);
             UserStore.user = response.data.user;
             UserStore.fetchingInProgress = false;
@@ -44,7 +42,6 @@ export class User {
             UserStore.registerError = null;
             UserStore.fetchingInProgress = true;
             const response = await fetchApi.post(URL_PATH.SIGNUP, data);
-            console.log(response);
             localStorage.setItem('userToken', response.data.token);
             UserStore.user = response.data.user;
             UserStore.fetchingInProgress = false;

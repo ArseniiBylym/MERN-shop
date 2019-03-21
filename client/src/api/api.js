@@ -6,6 +6,8 @@ export const URL_PATH = {
     LOGIN: `/api/user/login`,
     SIGNUP: `/api/user/signup`,
     PRODUCT_CATEGORY: `/api/product-category`,
+    PRODUCT: `/api/product`,
+    PRODUCT_COMMENT: `/api/product/comment`,
 };
 
 class FetchApi {
@@ -25,7 +27,8 @@ class FetchApi {
     };
 
     put = (url, data) => {
-        return axios.put(BASE_URL + url, {
+        return axios(BASE_URL + url, {
+            method: 'put',
             headers: this.authUserHeaders(),
             data: JSON.stringify(data),
         });

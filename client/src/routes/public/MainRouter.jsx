@@ -1,10 +1,10 @@
 // Libraries
-import React, {useContext} from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import React from 'react';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
 // Components
 import {MainHeader, NavBar} from '../../components/navigation';
-import {Home, Category} from '.';
+import {Home, Category, Product} from '.';
 
 // store
 import {ProductStore, UserStore} from '../../stores';
@@ -18,12 +18,13 @@ export const MainRouter = props => {
         <div className="MainRouter container d-flex flex-column">
             <div className="MainRouter__header">
                 <MainHeader store={UserStore} />
-                <NavBar store={ProductStore} />
+                <NavBar productStore={ProductStore} userStore={UserStore} />
             </div>
             <div className="MainRouter__content flex-grow-1 bg-cream">
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/category/:categoryName" component={Category} />
+                    <Route path="/category/:categoryName/:subCategoryName/:prodId" render={() => <Product userStore={UserStore} productStore={ProductStore} />} />
+                    <Route path="/category/:categoryName" render={() => <Category userStore={UserStore} productStore={ProductStore} />} />
                     <Redirect from="/*" to="/" />
                 </Switch>
             </div>

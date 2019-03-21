@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import './style.scss';
 import {Redirect, NavLink} from 'react-router-dom';

@@ -1,5 +1,3 @@
-import {createContext} from 'react';
-
 // All stores import
 import {Product} from './Product.store';
 import {User} from './User.store';

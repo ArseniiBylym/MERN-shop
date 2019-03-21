@@ -9,7 +9,6 @@ import {UserAction} from './actions';
 
 const App = () => {
     useEffect(() => {
-        console.log('getting user');
         UserAction.getUser();
     }, []);
     return (
