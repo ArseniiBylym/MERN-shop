@@ -64,6 +64,15 @@ export class Product {
         }
     };
 
+    editProduct = async (prodId, body) => {
+        try {
+            const result = await fetchApi.put(`${URL_PATH.PRODUCT}/${prodId}`, body);
+            ProductStore.selectedProduct = result.data.product;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     getProductDetails = async id => {
         try {
             const result = await fetchApi.get(`${URL_PATH.PRODUCT}/${id}`);
@@ -105,6 +114,7 @@ decorate(Product, {
     addSubCategory: action,
     getProductList: action,
     addProduct: action,
+    editProduct: action,
     getProductDetails: action,
     clearProductDetails: action,
     addReview: action,

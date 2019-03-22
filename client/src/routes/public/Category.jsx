@@ -41,7 +41,6 @@ export const Category = withRouter(
                 <div className="Category__content col-8 my-3">
                     <Switch>
                         <Route exact path={`/category/${categoryName}`} render={() => <CategoryGrid category={categoryName} productStore={productStore} />} />
-                        {/* <Route path={`/category/${categoryName}/:subCategoryName`} render={() => <ProductList productStore={productStore} />} /> */}
                         <Route path={`/category/:categoryName/:subCategoryName`} render={() => <ProductList isAdmin={userStore.isAdmin} productStore={productStore} />} />
                     </Switch>
                 </div>

@@ -1,30 +1,36 @@
-import React, {Fragment, useState, useRef} from 'react';
-import {Input, FileInput, Radiobutton, Textarea} from '../form';
+/* eslint-disable indent */
+import React, {Fragment, useState, useRef, useEffect} from 'react';
+import {FaEdit} from 'react-icons/fa';
+import {Input, FileInput, Radiobutton, Textarea, Checkbox} from '../form';
 import {ImagePreview} from '../views';
 import {ProductAction} from '../../actions/index';
 import {toBase64} from '../../utils/helpers';
 
-const defaultState = {
-    name: '',
-    price: '',
-    salePrice: '',
-    description: '',
-    manufacture: '',
-    quantity: 1,
+const defaultImageState = {
     imageFile: '',
     imageURL: '',
     imageType: 'file',
 };
 
-export const ProductItem = ({category, subCategory}) => {
-    const [state, setState] = useState({...defaultState});
+export const ProductEdit = props => {
+    const [state, setState] = useState(null);
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+
+    useEffect(() => {
+        setState({
+            ...props,
+            ...defaultImageState,
+        });
+    }, [props]);
 
     const radioInputs = [{label: 'Select file', value: 'file'}, {label: 'Select URL', value: 'url'}];
+    const checkboxList = [{label: 'Update image', name: 'withImage'}];
 
     const modalBody = useRef(null);
     const closeButton = useRef(null);
     const resetState = () => {
-        setState({...defaultState});
+        setState(props);
+        setSelectedCheckboxes({});
     };
 
     const backdropClickHandler = e => {
@@ -32,9 +38,18 @@ export const ProductItem = ({category, subCategory}) => {
         resetState();
     };
 
+    const isChecked = checkboxName => {
+        return !!selectedCheckboxes[checkboxName];
+    };
     const saveClickHandler = () => {
-        const {name, description, price, salePrice, quantity, manufacture} = state;
-        ProductAction.addProduct(category, subCategory, {
+        const {_id, name, description, price, salePrice, quantity, manufacture, category, subCategory} = state;
+        const image = () => {
+            if (selectedCheckboxes.withImage) {
+                return state.imageType === 'file' ? state.imageFile : state.imageURL;
+            }
+            return undefined;
+        };
+        ProductAction.editProduct(_id, {
             name,
             description,
             price,
@@ -43,22 +58,36 @@ export const ProductItem = ({category, subCategory}) => {
             manufacture,
             category,
             subCategory,
-            imageUrl: state.imageType === 'file' ? state.imageFile : state.imageURL,
+            imageUrl: image(),
         });
         closeButton.current.click();
     };
 
     const onChangeHandler = async e => {
         const target = e.target;
-        let value = e.target.value;
-        if (target.name === 'imageFile') {
-            const file = target.files[0];
-            value = await toBase64(file);
+        const {type, name} = target;
+        let value = target.value;
+        switch (type) {
+            case 'checkbox':
+                setSelectedCheckboxes({
+                    ...selectedCheckboxes,
+                    [name]: !selectedCheckboxes[name],
+                });
+                break;
+            case 'file':
+                value = await toBase64(target.files[0]);
+                setState({
+                    ...state,
+                    [name]: value,
+                });
+                break;
+            default:
+                setState({
+                    ...state,
+                    [name]: value,
+                });
+                break;
         }
-        setState({
-            ...state,
-            [target.name]: value,
-        });
     };
 
     const onKeyUpHandler = e => {
@@ -87,17 +116,18 @@ export const ProductItem = ({category, subCategory}) => {
         );
     };
 
+    if (!state) return null;
     return (
         <Fragment>
-            <button type="button" className="btn btn-outline-info" data-toggle="modal" data-target="#ProductItemModal">
-                + Add product
+            <button type="button" className="btn btn-outline-info d-flex align-items-center" data-toggle="modal" data-target="#ProductEditModal">
+                <FaEdit /> <p className="mb-0 ml-1">Edit product</p>
             </button>
-            <div className="modal fade" onClick={backdropClickHandler} id="ProductItemModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+            <div className="modal fade" onClick={backdropClickHandler} id="ProductEditModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content" ref={modalBody}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="productTypeLabel">
-                                Add a new product item
+                                Edit current product data
                             </h5>
                         </div>
                         <div className="modal-body text-left">
@@ -107,7 +137,8 @@ export const ProductItem = ({category, subCategory}) => {
                             <Input value={state.quantity} type="number" name="quantity" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Quantity" />
                             <Input value={state.manufacture} name="manufacture" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Manufacture" />
                             <Textarea value={state.description} name="description" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Description" />
-                            {imageSelector()}
+                            <Checkbox inputList={checkboxList} selectedList={selectedCheckboxes} name="withImage" onChange={onChangeHandler} labelText="" />
+                            {isChecked('withImage') && imageSelector()}
                         </div>
                         <div className="modal-footer">
                             <button type="button" ref={closeButton} onClick={() => resetState()} className="btn btn-secondary" data-dismiss="modal">

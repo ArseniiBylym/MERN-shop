@@ -4,6 +4,7 @@ import {observer} from 'mobx-react-lite';
 import {ProductAction} from '../../actions';
 import {Modal} from '../../components/modal';
 import {Reviews} from '../../components/views';
+import {UserStore} from '../../stores/index';
 
 export const Product = withRouter(
     observer(props => {
@@ -20,7 +21,10 @@ export const Product = withRouter(
         return (
             <Fragment>
                 <div className="Product row m-3">
-                    <h3 className="ml-3 mb-0">{product.name}</h3>
+                    <div className="Product__header d-flex flex-wrap align-items-center justify-content-between w-100 mx-3">
+                        <h3 className="mb-0">{product.name}</h3>
+                        {UserStore.isAdmin && <Modal.ProductEdit {...product} />}
+                    </div>
                     <div className="Product__header row m-3">
                         <div className="image col-12 col-md-9 position-relative p-0">
                             {product.salePrice && <div className="saleLabel saleLabel__topLeft">SALE</div>}
