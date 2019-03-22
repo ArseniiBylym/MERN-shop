@@ -11,7 +11,7 @@ exports.getProduct = async (req, res, next) => {
     let totalCount = 0;
     try {
         if (category && subCategory) {
-            products = await Product.find({category, subCategory}).select({name: 1, price: 1, salePrice: 1, imageUrl: 1, category: 1, subCategory: 1});
+            products = await Product.find({category, subCategory}).select({description: 0, reviews: 0, __v: 0});
             totalCount = await Product.find({category, subCategory}).countDocuments();
         } else if (category && !subCategory) {
             products = await Product.find({category}).select({name: 1, price: 1, imageUrl: 1, category: 1});

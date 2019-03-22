@@ -7,7 +7,7 @@ import {MainHeader, NavBar} from '../../components/navigation';
 import {Home, Category, Product} from '.';
 
 // store
-import {ProductStore, UserStore} from '../../stores';
+import {ProductStore, UserStore, CartStore} from '../../stores';
 
 // Styles
 import './style.scss';
@@ -17,7 +17,7 @@ export const MainRouter = props => {
     return (
         <div className="MainRouter container d-flex flex-column">
             <div className="MainRouter__header">
-                <MainHeader store={UserStore} />
+                <MainHeader userStore={UserStore} cartStore={CartStore} />
                 <NavBar productStore={ProductStore} userStore={UserStore} />
             </div>
             <div className="MainRouter__content flex-grow-1 bg-cream">

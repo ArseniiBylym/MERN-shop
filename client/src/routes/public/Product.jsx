@@ -35,7 +35,8 @@ export const Product = withRouter(
                                 <span className={product.salePrice ? 'text-crossed' : ''}>$ {product.price.toFixed(2)}</span>
                                 {product.salePrice && <span className="text-danger ml-1">$ {product.salePrice.toFixed(2)}</span>}
                             </h5>
-                            <div className="byeButton btn btn-primary cursor-pointer w-100">Bye now</div>
+                            <Modal.AddToCart product={product} text="Bye now" />
+                            {/* <div className="byeButton btn btn-primary cursor-pointer w-100">Bye now</div> */}
                         </div>
                     </div>
                     <div className="Product__details row m-3">

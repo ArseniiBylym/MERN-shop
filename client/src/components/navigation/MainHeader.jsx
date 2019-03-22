@@ -2,12 +2,12 @@ import React from 'react';
 import {observer} from 'mobx-react-lite';
 import './style.scss';
 import {Link} from 'react-router-dom';
-import {FaCartPlus} from 'react-icons/fa';
 import {IoIosLogIn, IoIosLogOut} from 'react-icons/io';
 import {SearchInput} from '../form';
 import {UserAction} from '../../actions';
+import {Modal} from '../modal';
 
-export const MainHeader = observer(({store}) => {
+export const MainHeader = observer(({userStore, cartStore}) => {
     return (
         <div className="MainHeader container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-between">
@@ -42,12 +42,8 @@ export const MainHeader = observer(({store}) => {
                         <option> +38 097 555 55 55</option>
                         <option> +38 066 333 33 33</option>
                     </select>
-                    <button className="btn mx-2">
-                        <p className="text-primary text-center h4 mb-0">
-                            <FaCartPlus />
-                        </p>
-                    </button>
-                    {store.user ? (
+                    <Modal.Cart cartStore={cartStore} />
+                    {userStore.user ? (
                         <button onClick={UserAction.logoutUser} className="loginButton btn mb-0">
                             <span className="h3">
                                 <IoIosLogOut />

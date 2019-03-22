@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-
 import DefaultProductImage from '../../../resources/img/default-product.jpg';
+import {Modal} from '../../modal';
 
 export const ProductCard = props => {
     const {_id, price, salePrice, name, imageUrl, category, subCategory} = props;
@@ -23,7 +23,8 @@ export const ProductCard = props => {
                     <span className={salePrice ? 'text-crossed' : ''}>$ {price.toFixed(2)}</span>
                     {salePrice && <span className="text-danger ml-1">$ {salePrice.toFixed(2)}</span>}
                 </h5>
-                <div className="byeButton btn btn-primary cursor-pointer w-100">Bye now</div>
+                <Modal.AddToCart product={props} text="Bye now" />
+                {/* <div className="byeButton btn btn-primary cursor-pointer w-100">Bye now</div> */}
             </div>
         </div>
     );

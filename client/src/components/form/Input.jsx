@@ -45,8 +45,8 @@ export function Input(props) {
 
     return (
         <Fragment>
-            <div className={`form-group ${labelPosition === 'left' || labelPosition === 'right' ? 'row' : ''}`}>
-                {labelText && <label>{labelText}</label>}
+            <div className={`form-group ${labelPosition === 'left' || labelPosition === 'right' ? 'row flex-nowrap align-items-center mb-0 mx-0' : ''}`}>
+                {labelText && <label className={`${labelPosition === 'left' || labelPosition === 'right' ? 'mb-0 mx-3' : ''}`}>{labelText}</label>}
                 <input type={type} name={name} className={`form-control ${error && 'is-invalid'}`} value={value} onChange={onChange} onKeyUp={onKeyUp} placeholder={placeholder} />
                 {smallText && <small className={`form-text text-${smallColor}`}>{smallText}</small>}
                 {error && <div className="invalid-feedback">{error}</div>}
