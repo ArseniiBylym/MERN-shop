@@ -35,6 +35,7 @@ app.use('/api/product', require('./routes/product'));
 app.use('/api/product-category', require('./routes/productCategory'));
 app.use('/api/service', require('./routes/service'));
 app.use('/api/order', require('./routes/order'));
+app.use('/api/cart', require('./routes/cart'));
 
 // Error handling
 

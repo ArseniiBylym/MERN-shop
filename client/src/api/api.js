@@ -8,6 +8,7 @@ export const URL_PATH = {
     PRODUCT_CATEGORY: `/api/product-category`,
     PRODUCT: `/api/product`,
     PRODUCT_COMMENT: `/api/product/comment`,
+    CART: `/api/cart`,
 };
 
 class FetchApi {
@@ -34,10 +35,10 @@ class FetchApi {
         });
     };
 
-    delete = (url, params) => {
-        return axios.delete(BASE_URL + url, {
+    delete = url => {
+        return axios(BASE_URL + url, {
+            method: 'delete',
             headers: this.authUserHeaders(),
-            params,
         });
     };
 

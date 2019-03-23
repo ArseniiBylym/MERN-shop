@@ -1,10 +1,14 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {observer} from 'mobx-react-lite';
 import {FaCartPlus} from 'react-icons/fa';
 import {IoIosCloseCircleOutline} from 'react-icons/io';
 import {CartAction} from '../../actions';
 
 export const Cart = observer(({cartStore}) => {
+    useEffect(() => {
+        CartAction.initCart();
+    }, []);
+
     const onRemoveHandler = productId => e => {
         if (cartStore.totalLength === 1) closeModal();
         CartAction.removeFromCart(productId);
@@ -27,11 +31,12 @@ export const Cart = observer(({cartStore}) => {
         return cartStore.cart.map(item => {
             return (
                 <div className="row" key={item.product._id}>
-                    <div className="col-12 col-lg-4 d-flex align-items-center">
+                    <div className="col-12 col-lg-3 d-flex align-items-center">
                         <img src={item.product.imageUrl} alt="Product" className="w-100" height="auto" />
                     </div>
-                    <div className="col-12 col-lg-4 d-flex align-items-center justify-content-center h6">{item.product.name}</div>
+                    <div className="col-12 col-lg-3 d-flex align-items-center justify-content-center h6">{item.product.name}</div>
                     <div className="col-12 col-lg-2 d-flex align-items-center justify-content-center">{item.quantity} </div>
+                    <div className="col-12 col-lg-2 d-flex align-items-center justify-content-center">$ {item.product.price} </div>
                     <div className="col-12 col-lg-2 text-danger d-flex align-items-center justify-content-center">
                         <i className="d-block h5 cursor-pointer" onClick={onRemoveHandler(item.product._id)}>
                             <IoIosCloseCircleOutline />
@@ -59,14 +64,15 @@ export const Cart = observer(({cartStore}) => {
                     <div className="modal-content" ref={modalBody}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="productTypeLabel">
-                                Cart list
+                                Cart
                             </h5>
                         </div>
                         <div className="modal-body container bg-cream">
                             <div className="row">
-                                <div className="col-4 d-none d-lg-block text-center" />
-                                <div className="col-4 d-none d-lg-block text-center">Name</div>
+                                <div className="col-3 d-none d-lg-block text-center" />
+                                <div className="col-3 d-none d-lg-block text-center">Name</div>
                                 <div className="col-2 d-none d-lg-block text-center">Quantity</div>
+                                <div className="col-2 d-none d-lg-block text-center">Price</div>
                                 <div className="col-2 d-none d-lg-block text-center">Remove</div>
                             </div>
                             <hr />
