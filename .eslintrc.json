@@ -21,7 +21,7 @@
     "parser": "babel-eslint",
     "rules": {
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/exhaustive-deps": "off",
         "prettier/prettier": "error",
         "import/no-unresolved": "off",
         "import/named": "off",

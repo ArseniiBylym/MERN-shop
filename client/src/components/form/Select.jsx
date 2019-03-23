@@ -5,7 +5,7 @@ Select.propTypes = {
     name: PT.string.isRequired,
     labelText: PT.string,
     selectList: PT.array,
-    selectedValue: PT.string.isRequired,
+    selectedValue: PT.oneOfType([PT.string.isRequired, PT.number.isRequired]),
     onChange: PT.func.isRequired,
     readOnly: PT.bool,
     multiple: PT.bool,

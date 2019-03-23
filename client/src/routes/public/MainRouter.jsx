@@ -4,16 +4,16 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 
 // Components
 import {MainHeader, NavBar} from '../../components/navigation';
+import {OrderConfirm, Orders} from '../../components/views/order';
 import {Home, Category, Product} from '.';
 
 // store
-import {ProductStore, UserStore, CartStore} from '../../stores';
+import {ProductStore, UserStore, CartStore, OrderStore} from '../../stores';
 
 // Styles
 import './style.scss';
 
 export const MainRouter = props => {
-    // const productStore = useContext(ProductStore);
     return (
         <div className="MainRouter container d-flex flex-column">
             <div className="MainRouter__header">
@@ -25,6 +25,8 @@ export const MainRouter = props => {
                     <Route exact path="/" component={Home} />
                     <Route path="/category/:categoryName/:subCategoryName/:prodId" render={() => <Product userStore={UserStore} productStore={ProductStore} />} />
                     <Route path="/category/:categoryName" render={() => <Category userStore={UserStore} productStore={ProductStore} />} />
+                    <Route path="/cart" render={() => <OrderConfirm userStore={UserStore} productStore={ProductStore} cartStore={CartStore} />} />
+                    <Route path="/order" render={() => <Orders userStore={UserStore} orderStore={OrderStore} />} />
                     <Redirect from="/*" to="/" />
                 </Switch>
             </div>

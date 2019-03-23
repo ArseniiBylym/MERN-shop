@@ -2,7 +2,9 @@
 import {Product} from './Product.store';
 import {User} from './User.store';
 import {Cart} from './Cart.store';
+import {Order} from './Order.store';
 
 export const ProductStore = new Product();
 export const UserStore = new User();
 export const CartStore = new Cart();
+export const OrderStore = new Order();

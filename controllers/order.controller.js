@@ -1,4 +1,5 @@
 const Order = require('../models/Order.model');
+const Cart = require('../models/Cart.model');
 
 exports.getOrder = async (req, res, next) => {
     const {isAdmin} = req.user;
@@ -25,16 +26,14 @@ exports.getOrder = async (req, res, next) => {
 };
 
 exports.addOrder = async (req, res, next) => {
-    const userId = req.user.id;
+    console.log(req.body)
+    const {order, cartId} = req.body;
 
-    const newOrder = new Order({
-        ...req.body,
-        customer: userId,
-        date: new Date(),
-    });
+    const newOrder = new Order(order);
     try {
         const createdOrder = await newOrder.save();
         if (!createdOrder) throw new Error(`Order creation failed`);
+        const deletedCart = await Cart.findByIdAndDelete(cartId).exec();
         return res.status(201).json({message: `New order was successfully crated`, orderItem: createdOrder});
     } catch (error) {
         next(error);

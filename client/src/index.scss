@@ -20,8 +20,17 @@ a {
   text-decoration: none;
   border-bottom: 1px solid transparent;
 
+  &.no-underline{
+    text-decoration: none;
+  }
+
   &.active{
     text-decoration: underline;
+  }
+  &:hover {
+    &.no-underline {
+      text-decoration: none;
+    }
   }
 }
 

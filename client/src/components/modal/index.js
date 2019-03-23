@@ -5,6 +5,7 @@ import {ProductEdit} from './ProductEdit.modal';
 import {ImageDetails} from './ImageDetails.modal';
 import {AddToCart} from './AddToCart.modal';
 import {Cart} from './Cart.modal';
+import {Logout} from './Logout.modal';
 
 export const Modal = {
     ProductType,
@@ -14,4 +15,5 @@ export const Modal = {
     ProductEdit,
     AddToCart,
     Cart,
+    Logout,
 };
