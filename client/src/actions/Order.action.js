@@ -24,6 +24,37 @@ export class Order {
             console.log(error);
         }
     };
+
+    updateOrder = async (orderId, status) => {
+        try {
+            const result = await fetchApi.put(URL_PATH.ORDER, {orderId, status});
+            console.log(result);
+            OrderStore.orders = OrderStore.orders.map(item => {
+                if (item._id === orderId) {
+                    return {
+                        ...item,
+                        status,
+                    };
+                }
+                return item;
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    deleteOrder = async id => {
+        console.log(id);
+        try {
+            const result = await fetchApi.delete(`${URL_PATH.ORDER}/${id}`);
+            OrderStore.orders = OrderStore.orders.filter(item => {
+                return item._id !== id;
+            });
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
 
 decorate(Order, {

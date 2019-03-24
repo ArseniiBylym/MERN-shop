@@ -9,11 +9,11 @@ export const Login = observer(({store}) => {
     const [form, setForm] = useState({email: '', password: ''});
 
     const emailRef = useRef(null);
-    useEffect(() => {
-        setTimeout(() => {
-            emailRef.current.focus();
-        }, 500);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         emailRef.current.focus();
+    //     }, 1000);
+    // }, []);
 
     const onChangeHandler = e => {
         setForm({

@@ -8,10 +8,22 @@ export const Orders = observer(({userStore, orderStore}) => {
         OrderAction.getOrder();
     }, [userStore.user]);
 
+    const getUserOrders = () => {
+        return orderStore.orders.map(item => <OrderUser key={item._id} {...item} />);
+    };
+
+    const getAdminOrders = () => {
+        return (
+            <div className="accordion" id="orderAdminAccordion">
+                {orderStore.orders.map((item, i) => (
+                    <OrderAdmin key={item._id} {...item} index={i}/>
+                ))}
+            </div>
+        );
+    };
+
     const orderList = () => {
-        return orderStore.orders.map(item => {
-            return userStore.isAdmin ? <OrderAdmin key={item._id} {...item} /> : <OrderUser key={item._id} {...item} />;
-        });
+        return userStore.isAdmin ? getAdminOrders() : getUserOrders();
     };
 
     if (!userStore.user) return <div className="text-center h4 mt-3">To see your orders you need to login</div>;

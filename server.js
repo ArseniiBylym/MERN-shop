@@ -54,5 +54,6 @@ mongoose
         console.log('Server listen on port 5000');
     })
     .catch(error => {
+        console.log('connection error')
         console.log(error);
     });

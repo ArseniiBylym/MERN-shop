@@ -1,11 +1,15 @@
 /* eslint-disable indent */
 import React from 'react';
 import moment from 'moment';
+import {withRouter} from 'react-router';
 
-export const OrderUser = props => {
+export const OrderUser = withRouter(props => {
+    const onClickHandler = item => e => {
+        props.history.push(`/category/${item._id.category}/${item._id.subCategory}/${item._id._id}`);
+    };
     const tableRows = () => {
         return props.productList.map((item, i) => (
-            <tr key={item._id._id}>
+            <tr key={item._id._id} className="cursor-pointer" onClick={onClickHandler(item)}>
                 <th scope="row">{i + 1}</th>
                 <td>{item._id.name}</td>
                 <td>{item.quantity}</td>
@@ -45,7 +49,7 @@ export const OrderUser = props => {
                     Order #{props._id} from <span className="font-weight-bold">{moment(props.updatedAt).format('LLL')}</span>
                 </div>
                 <div className="card-body">
-                    <table className="table">
+                    <table className="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -57,7 +61,7 @@ export const OrderUser = props => {
                         <tbody>{tableRows()}</tbody>
                     </table>
                 </div>
-                <div className="card-footer row">
+                <div className="card-footer row mx-0">
                     <div className="col-6">
                         Total order price: <span className="font-weight-bold">$ {getTotalPrice()}</span>
                     </div>
@@ -68,4 +72,4 @@ export const OrderUser = props => {
             </div>
         </div>
     );
-};
+});

@@ -56,7 +56,7 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                                     Cart
                                 </Link>
                                 <Link className="dropdown-item" to="/order">
-                                    Order
+                                    Orders
                                 </Link>
                             </div>
                         </div>

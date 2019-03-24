@@ -12,13 +12,15 @@ const App = () => {
         UserAction.getUser();
     }, []);
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/login" render={() => <Login store={UserStore} />} />
-                <Route exact path="/signup" render={() => <Signup store={UserStore} />} />
-                <Route path="/" component={MainRouter} />
-            </Switch>
-        </Router>
+        <div className="wrapper">
+            <Router>
+                <Switch>
+                    <Route exact path="/login" render={() => <Login store={UserStore} />} />
+                    <Route exact path="/signup" render={() => <Signup store={UserStore} />} />
+                    <Route path="/" component={MainRouter} />
+                </Switch>
+            </Router>
+        </div>
     );
 };
 
