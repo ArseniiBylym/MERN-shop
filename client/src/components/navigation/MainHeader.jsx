@@ -40,11 +40,18 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                 </div>
                 <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-md-4 ml-auto">
                     {userStore.user && (
-                        <div class="dropdown">
-                            <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div className="dropdown">
+                            <button
+                                className="btn btn-white dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
                                 {userStore.user.email}
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <Link className="dropdown-item" to="/cart">
                                     Cart
                                 </Link>
