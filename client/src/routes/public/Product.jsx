@@ -9,6 +9,7 @@ import {UserStore} from '../../stores/index';
 export const Product = withRouter(
     observer(props => {
         const product = props.productStore.selectedProduct;
+        // console.log(product.averageRaiting);
 
         useEffect(() => {
             ProductAction.getProductDetails(props.match.params.prodId);

@@ -6,20 +6,20 @@ const Product = require('../models/Product.model');
 // @desc    Get all products
 // @access  Public
 exports.getProduct = async (req, res, next) => {
-    const {category, subCategory} = req.query;
+    const {category, subCategory, name} = req.query;
     let products = [];
     let totalCount = 0;
     try {
-        if (category && subCategory) {
+        if (name) {
+            products = await Product.find().byName(name).select('name price imageUrl category subCategory').exec();
+        } else if (category && subCategory) {
             products = await Product.find({category, subCategory}).select({description: 0, reviews: 0, __v: 0});
-            totalCount = await Product.find({category, subCategory}).countDocuments();
         } else if (category && !subCategory) {
             products = await Product.find({category}).select({name: 1, price: 1, imageUrl: 1, category: 1});
-            totalCount = await Product.find({category}).countDocuments();
         } else {
             products = await Product.find().select({name: 1, price: 1, imageUrl: 1});
-            totalCount = await Product.find().countDocuments();
         }
+        totalCount = products.length;
         res.status(200).json({products, totalCount});
     } catch (error) {
         error.message = `Can't get product data from database`;
@@ -30,7 +30,7 @@ exports.getProduct = async (req, res, next) => {
 exports.getProductDetails = async (req, res, next) => {
     const {prodId} = req.params;
     try {
-        const product = await Product.findById(prodId).populate('reviews.author', 'name');
+        const product = await Product.findById(prodId).populate('reviews.author', 'name').exec();
         if (!product) {
             const error = new Error();
             error.statusCode = 400;

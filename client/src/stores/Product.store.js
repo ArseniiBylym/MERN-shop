@@ -16,6 +16,10 @@ export class Product {
     productListFetching = false;
 
     selectedProduct = null;
+
+    foundList = [];
+    foundListVisible = false;
+    foundListLength = 0;
 }
 
 decorate(Product, {
@@ -25,4 +29,7 @@ decorate(Product, {
     productListLength: observable,
     productListFetching: observable,
     selectedProduct: observable,
+    foundList: observable,
+    foundListVisible: observable,
+    foundListLength: observable,
 });

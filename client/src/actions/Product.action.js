@@ -106,6 +106,25 @@ export class Product {
             console.log(error);
         }
     };
+
+    searchProduct = async name => {
+        if (!name) {
+            this.clearSearchProduct();
+            return;
+        }
+        try {
+            const result = await fetchApi.get(URL_PATH.PRODUCT, false, {name});
+            ProductStore.foundList = result.data.products;
+            ProductStore.foundListVisible = true;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    clearSearchProduct = () => {
+        ProductStore.foundList = [];
+        ProductStore.foundListVisible = false;
+    }
 }
 
 decorate(Product, {
@@ -118,4 +137,5 @@ decorate(Product, {
     getProductDetails: action,
     clearProductDetails: action,
     addReview: action,
+    searchProduct: action,
 });

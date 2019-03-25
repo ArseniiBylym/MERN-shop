@@ -5,8 +5,14 @@ import {Link} from 'react-router-dom';
 import {IoIosLogIn} from 'react-icons/io';
 import {SearchInput} from '../form';
 import {Modal} from '../modal';
+import {ProductStore} from '../../stores';
+import {ProductAction} from '../../actions';
 
 export const MainHeader = observer(({userStore, cartStore}) => {
+    const searchActionHandler = string => {
+        ProductAction.searchProduct(string);
+    };
+
     return (
         <div className="MainHeader container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-between">
@@ -17,26 +23,13 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                     </Link>
                 </div>
                 <div className="MainHeader__center col-12 col-sm-6 col-md-5 mt-2">
-                    <SearchInput>
-                        {(inputValue, onChange, keyUpHandler, clickHandler) => (
-                            <div className="input-group ">
-                                <input
-                                    value={inputValue}
-                                    onChange={onChange}
-                                    onKeyUp={keyUpHandler}
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Searching by products"
-                                    aria-describedby="basic-addon2"
-                                />
-                                <div className="input-group-append">
-                                    <button onClick={clickHandler} className="btn btn-primary pointer" id="basic-addon2">
-                                        Search
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </SearchInput>
+                    <SearchInput
+                        placeholder="Searching by product name"
+                        foundList={ProductStore.foundList}
+                        isVisible={ProductStore.foundListVisible}
+                        searchAction={searchActionHandler}
+                        outsideClickHandler={ProductAction.clearSearchProduct}
+                    />
                 </div>
                 <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-md-4 ml-auto">
                     {userStore.user && (

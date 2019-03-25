@@ -20,4 +20,15 @@ const productSchema = new Schema({
     ],
 });
 
+productSchema.query.byName = function(name) {
+    return this.where({name: new RegExp(name, 'i')});
+}
+
+productSchema.virtual('averageRaiting').get(function () {
+    const docsWithRaiting = this.reviews.filter(item => item.raiting)
+    return docsWithRaiting.reduce((prev, current) => {
+        return prev + current.raiting;
+    }) / docsWithRaiting.length;
+})
+
 module.exports = model('Product', productSchema);
