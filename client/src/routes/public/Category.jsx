@@ -16,8 +16,8 @@ export const Category = withRouter(
 
             return list.map((item, i) => {
                 return (
-                    <NavLink key={item.name} to={`/category/${categoryName}/${item.name}`}>
-                        <li className="list-group-item upperCase">{item.name}</li>
+                    <NavLink className="no-underline" key={item.name} to={`/category/${categoryName}/${item.name}`}>
+                        <li className="list-group-item upperCase bg-transparent">{item.name}</li>
                     </NavLink>
                 );
             });

@@ -15,8 +15,13 @@ code {
     monospace;
 }
 
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
+
 .wrapper {
-  // background: url('./resources//img/conklin-media-bicycle-background.jpg') left top / cover no-repeat;
+  background: url('./resources/img/main-background.jpg') left top / cover no-repeat;
 }
 
 a {

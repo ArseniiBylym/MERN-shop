@@ -1,13 +1,68 @@
-.MainRouter{
+.MainRouter {
     height: 100vh;
     overflow: auto;
-    // &__content {
-    //     background-color: transparent !important;
-    // }
+    &__content {
+        background: radial-gradient(rgba(226, 227, 223, 0.95) 60%, rgba(255, 255, 255, 0.1));
+        background-attachment: fixed;
+    }
 }
 
-.Login{
+.Login {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    .card{
+        background-color: rgba(255,255,255,.9);
+    }
+}
+
+.Category {
+        a {
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 3px;
+            margin: 3px 0;
+            border-bottom: none;
+            &:hover,
+            &.active {
+                color: white;
+                background-color: rgba(61, 61, 61, .8);
+                text-decoration: none;
+            }
+        }
+    &__content {
+        a {
+            &:hover,
+            &.active {
+                color: black;
+            }
+        }
+        .ProductCard {
+            transition: all .3s ease;
+            // transform: scale(1);
+            &:hover {
+                // transform: translateX(10px);
+                // margin: 5px;
+                box-shadow: 0 3px 5px -3px rgba(0,0,0,.5);
+            }
+            .byeButton{
+                &:hover {
+                    // transform: scale(1);
+                }
+            }
+        }
+    }
+}
+
+.Product{
+    &__details{
+        a {
+            text-decoration: none;
+            &:hover,
+            &.active{
+                color: white;
+                background-color: rgba(61, 61, 61, .8);
+            }
+        }
+    }
 }

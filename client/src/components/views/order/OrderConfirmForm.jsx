@@ -20,7 +20,7 @@ export const OrderConfirmForm = ({form, onChange, onKeyUp, delliveryServiceSelec
                     <Select name="paymentType" selectedValue={form.paymentType} selectList={paymentTypeSelect} onChange={onChange} labelText="Payment type" />
                 </div>
                 <Textarea value={form.details} name="details" onChange={onChange} onKeyUp={onKeyUp} labelText="Details" />
-                <button className="w-100 btn btn-outline-primary" onClick={confirmHandler} disabled={isButtonDisabled()}>
+                <button className="w-100 btn btn-primary" onClick={confirmHandler} disabled={isButtonDisabled()}>
                     Confirm
                 </button>
             </div>

@@ -16,13 +16,8 @@ export const MainHeader = observer(({userStore, cartStore}) => {
     return (
         <div className="MainHeader container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-between">
-                <div className="MainHeader__left text-white bg-primary col-12 col-sm-6 col-md-3 ">
-                    <Link to="/" className="text-white no-underline">
-                        <h3 className="mb-0">BIKE</h3>
-                        <h3 className="ml-5 mb-0">SHOP</h3>
-                    </Link>
-                </div>
-                <div className="MainHeader__center col-12 col-sm-6 col-md-5 mt-2">
+                <Link to="/" className="MainHeader__logo text-white col-12 col-sm-6 col-md-3 text-white no-underline" />
+                <div className="MainHeader__center col-12 col-sm-6 col-md-5 mt-2 mt-md-0">
                     <SearchInput
                         placeholder="Searching by product name"
                         foundList={ProductStore.foundList}
@@ -31,11 +26,11 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                         outsideClickHandler={ProductAction.clearSearchProduct}
                     />
                 </div>
-                <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-md-4 ml-auto">
+                <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-md-4 ml-auto text-primary">
                     {userStore.user && (
                         <div className="dropdown">
                             <button
-                                className="btn btn-white dropdown-toggle"
+                                className="btn btn-light dropdown-toggle "
                                 type="button"
                                 id="dropdownMenuButton"
                                 data-toggle="dropdown"
@@ -59,7 +54,7 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                         <Modal.Logout />
                     ) : (
                         <Link to="/login">
-                            <button className="loginButton btn mb-0">
+                            <button className="loginButton btn mb-0 text-primary">
                                 <span className="h3">
                                     <IoIosLogIn />
                                 </span>

@@ -122,7 +122,7 @@ export const ProductEdit = props => {
             <button type="button" className="btn btn-outline-info d-flex align-items-center" data-toggle="modal" data-target="#ProductEditModal">
                 <FaEdit /> <p className="mb-0 ml-1">Edit product</p>
             </button>
-            <div className="modal fade" onClick={backdropClickHandler} id="ProductEditModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+            <div className="modal fade text-primary_black" onClick={backdropClickHandler} id="ProductEditModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content" ref={modalBody}>
                         <div className="modal-header">

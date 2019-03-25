@@ -20,7 +20,7 @@ export const MainRouter = props => {
                 <MainHeader userStore={UserStore} cartStore={CartStore} />
                 <NavBar productStore={ProductStore} userStore={UserStore} />
             </div>
-            <div className="MainRouter__content flex-grow-1 bg-cream">
+            <div className="MainRouter__content flex-grow-1 ">
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/category/:categoryName/:subCategoryName/:prodId" render={() => <Product userStore={UserStore} productStore={ProductStore} />} />

@@ -58,7 +58,15 @@ export const AddToCart = ({product, text}) => {
             <div className="byeButton btn btn-primary cursor-pointer w-100" data-toggle="modal" data-target={`#AddToCartModal-${product._id}`}>
                 {text}
             </div>
-            <div className="modal fade" onClick={backdropClickHandler} id={`AddToCartModal-${product._id}`} tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+            <div
+                className="modal fade "
+                onClick={backdropClickHandler}
+                id={`AddToCartModal-${product._id}`}
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="productTypeLabel"
+                aria-hidden="true"
+            >
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content" ref={modalBody}>
                         <div className="modal-header">

@@ -22,7 +22,7 @@ export const Product = withRouter(
         return (
             <Fragment>
                 <div className="Product row m-3">
-                    <div className="Product__header d-flex flex-wrap align-items-center justify-content-between w-100 mx-3">
+                    <div className="Product__header d-flex flex-wrap align-items-center justify-content-between w-100 mx-3 text-primary_black">
                         <h3 className="mb-0">{product.name}</h3>
                         {UserStore.isAdmin && <Modal.ProductEdit {...product} />}
                     </div>
@@ -37,7 +37,6 @@ export const Product = withRouter(
                                 {product.salePrice && <span className="text-danger ml-1">$ {product.salePrice.toFixed(2)}</span>}
                             </h5>
                             <Modal.AddToCart product={product} text="Bye now" />
-                            {/* <div className="byeButton btn btn-primary cursor-pointer w-100">Bye now</div> */}
                         </div>
                     </div>
                     <div className="Product__details row m-3">

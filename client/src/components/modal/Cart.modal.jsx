@@ -63,11 +63,11 @@ export const Cart = withRouter(
                     </p>
                 </button>
                 {cartStore.totalLength && <span className="badge-counter badge badge-secondary rounded-circle">{cartStore.totalLength}</span>}
-                <div className="modal fade" onClick={backdropClickHandler} id="CartModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg" role="document">
+                <div className="modal fade text-primary_black" onClick={backdropClickHandler} id="CartModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg text-black" role="document">
                         <div className="modal-content" ref={modalBody}>
                             <div className="modal-header">
-                                <h5 className="modal-title" id="productTypeLabel">
+                                <h5 className="modal-title " id="productTypeLabel">
                                     Cart
                                 </h5>
                             </div>

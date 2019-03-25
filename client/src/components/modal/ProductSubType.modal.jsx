@@ -59,7 +59,7 @@ export const ProductSubType = props => {
     return (
         <Fragment>
             <button type="button" className="btn btn-outline-info" data-toggle="modal" data-target="#ProductSubTypeModal">
-                + Add new
+                + Add category
             </button>
             <div className="modal fade" onClick={backdropClickHandler} id="ProductSubTypeModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">

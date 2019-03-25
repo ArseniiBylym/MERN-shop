@@ -33,8 +33,8 @@ export const ProductType = () => {
 
     return (
         <Fragment>
-            <button type="button" className="btn btn-outline-info rounded-circle d-flex align-items-center p-2" data-toggle="modal" data-target="#ProductTypeModal">
-                <IoIosAdd />
+            <button type="button" className="btn btn-outline-info d-flex align-items-center p-2" data-toggle="modal" data-target="#ProductTypeModal">
+                + Add group
             </button>
             <div className="modal fade" onClick={backdropClickHandler} id="ProductTypeModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">

@@ -19,7 +19,7 @@ export const NavBar = withRouter(
                 {productStore.categories.length &&
                     productStore.categories.map(item => {
                         return (
-                            <NavLink key={item.categoryName} className="text-primary_black upperCase p-3 pl-0" to={`/category/${item.categoryName}`}>
+                            <NavLink key={item.categoryName} className="upperCase py-1 px-3" to={`/category/${item.categoryName}`}>
                                 <h5>{item.categoryName}</h5>
                             </NavLink>
                         );

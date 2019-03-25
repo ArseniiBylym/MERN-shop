@@ -53,7 +53,7 @@ export const Login = observer(({store}) => {
     return (
         <div className="Login container d-flex align-items-center justify-content-center">
             <div className="card px-5 py-3">
-                <div className="card-header text-center bg-primary text-white">
+                <div className="card-header text-center bg-primary text-primary_black">
                     <h4>Login form</h4>
                 </div>
                 <div className="card-body">

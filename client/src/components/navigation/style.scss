@@ -1,8 +1,38 @@
+.MainHeader {
+    &__logo{
+        background: 
+        radial-gradient(rgba(255,255,255,.1) 20%, rgba(0,0,0,.8)), 
+        url('../../resources/img/main-logo.png') center / cover no-repeat ;
+        width: 200px;
+        height: 100px;
+    }
+}
+
 .NavBar {
     position: relative;
     &__adminControl {
         position: absolute;
         top: 0;
         right: 0;
+    }
+    a {
+        color: white; 
+        transition: all .3s ease;
+        border-radius: 5px 5px 0 0;
+        margin: 5px 5px 0 5px;
+        padding: 5px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+        text-decoration: none;
+       
+        &.active{
+            color: #495057 !important;
+            background-color: #fff !important;
+        }
+        &:hover{
+            color: white;
+            background-color: rgba(61, 61, 61, .8);
+        }
     }
 }
