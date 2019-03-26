@@ -9,6 +9,7 @@ const defaultState = {
     price: '',
     salePrice: '',
     description: '',
+    details: '',
     manufacture: '',
     quantity: 1,
     imageFile: '',
@@ -33,7 +34,7 @@ export const ProductItem = ({category, subCategory}) => {
     };
 
     const saveClickHandler = () => {
-        const {name, description, price, salePrice, quantity, manufacture} = state;
+        const {name, description, price, salePrice, quantity, manufacture, details} = state;
         ProductAction.addProduct(category, subCategory, {
             name,
             description,
@@ -43,6 +44,7 @@ export const ProductItem = ({category, subCategory}) => {
             manufacture,
             category,
             subCategory,
+            details,
             imageUrl: state.imageType === 'file' ? state.imageFile : state.imageURL,
         });
         closeButton.current.click();
@@ -107,6 +109,7 @@ export const ProductItem = ({category, subCategory}) => {
                             <Input value={state.quantity} type="number" name="quantity" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Quantity" />
                             <Input value={state.manufacture} name="manufacture" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Manufacture" />
                             <Textarea value={state.description} name="description" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Description" />
+                            <Textarea value={state.details} name="details" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Details" />
                             {imageSelector()}
                         </div>
                         <div className="modal-footer">

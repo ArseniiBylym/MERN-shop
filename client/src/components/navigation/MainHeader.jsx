@@ -16,8 +16,8 @@ export const MainHeader = observer(({userStore, cartStore}) => {
     return (
         <div className="MainHeader container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-between">
-                <Link to="/" className="MainHeader__logo text-white col-12 col-sm-6 col-md-3 text-white no-underline" />
-                <div className="MainHeader__center col-12 col-sm-6 col-md-5 mt-2 mt-md-0">
+                <Link to="/" className="MainHeader__logo text-white col-12 col-sm-6 col-lg-3 text-white no-underline" />
+                <div className="MainHeader__center col-12 col-sm-6 col-lg-5 mt-2 mt-md-0">
                     <SearchInput
                         placeholder="Searching by product name"
                         foundList={ProductStore.foundList}
@@ -26,7 +26,7 @@ export const MainHeader = observer(({userStore, cartStore}) => {
                         outsideClickHandler={ProductAction.clearSearchProduct}
                     />
                 </div>
-                <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-md-4 ml-auto text-primary">
+                <div className="MainHeader__right d-flex flex-row align-items-center justify-content-end col-12 col-lg-4 ml-auto text-primary">
                     {userStore.user && (
                         <div className="dropdown">
                             <button

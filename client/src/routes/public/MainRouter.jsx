@@ -8,7 +8,7 @@ import {OrderConfirm, Orders} from '../../components/views/order';
 import {Home, Category, Product} from '.';
 
 // store
-import {ProductStore, UserStore, CartStore, OrderStore} from '../../stores';
+import {ProductStore, UserStore, CartStore, OrderStore, TypesStore} from '../../stores';
 
 // Styles
 import './style.scss';
@@ -25,8 +25,8 @@ export const MainRouter = props => {
                     <Route exact path="/" component={Home} />
                     <Route path="/category/:categoryName/:subCategoryName/:prodId" render={() => <Product userStore={UserStore} productStore={ProductStore} />} />
                     <Route path="/category/:categoryName" render={() => <Category userStore={UserStore} productStore={ProductStore} />} />
-                    <Route path="/cart" render={() => <OrderConfirm userStore={UserStore} productStore={ProductStore} cartStore={CartStore} />} />
-                    <Route path="/order" render={() => <Orders userStore={UserStore} orderStore={OrderStore} />} />
+                    <Route path="/cart" render={() => <OrderConfirm userStore={UserStore} productStore={ProductStore} cartStore={CartStore} typesStore={TypesStore} />} />
+                    <Route path="/order" render={() => <Orders userStore={UserStore} orderStore={OrderStore} typesStore={TypesStore} />} />
                     <Redirect from="/*" to="/" />
                 </Switch>
             </div>

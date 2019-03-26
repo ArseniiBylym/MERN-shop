@@ -2,7 +2,6 @@ import React, {useRef, useEffect} from 'react';
 import {observer} from 'mobx-react-lite';
 import {FaCartPlus} from 'react-icons/fa';
 import {IoIosCloseCircleOutline} from 'react-icons/io';
-import {Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import {CartAction} from '../../actions';
 
@@ -18,7 +17,6 @@ export const Cart = withRouter(
         };
 
         const toOrderHandler = () => {
-            console.log(props);
             props.history.push('/cart');
         };
 
@@ -63,7 +61,15 @@ export const Cart = withRouter(
                     </p>
                 </button>
                 {cartStore.totalLength && <span className="badge-counter badge badge-secondary rounded-circle">{cartStore.totalLength}</span>}
-                <div className="modal fade text-primary_black" onClick={backdropClickHandler} id="CartModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+                <div
+                    className="modal fade text-primary_black"
+                    onClick={backdropClickHandler}
+                    id="CartModal"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="productTypeLabel"
+                    aria-hidden="true"
+                >
                     <div className="modal-dialog modal-lg text-black" role="document">
                         <div className="modal-content" ref={modalBody}>
                             <div className="modal-header">

@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite';
 import {toJS} from 'mobx';
 import {withRouter} from 'react-router';
 import {OrderConfirmList, OrderConfirmForm} from '.';
-import {OrderAction, CartAction} from '../../../actions';
+import {OrderAction, TypesAction} from '../../../actions';
 
 const defaultForm = {
     name: '',
@@ -14,12 +14,18 @@ const defaultForm = {
     details: '',
 };
 
-const delliveryServiceSelect = [{name: 'Ukrposhta', value: 1}, {name: 'Nova Poshta', value: 2}];
-const paymentTypeSelect = [{name: 'Privat 24', value: 1}, {name: 'After receiving', value: 2}];
-
 export const OrderConfirm = withRouter(
     observer(props => {
         const [form, setForm] = useState(defaultForm);
+
+        useEffect(() => {
+            if (!props.typesStore.paymentTypes.length) {
+                TypesAction.getPaymentTypes();
+            }
+            if (!props.typesStore.delliveryTypes.length) {
+                TypesAction.getDelliveryTypes();
+            }
+        }, []);
 
         useEffect(() => {
             if (props.userStore.user) {
@@ -75,8 +81,8 @@ export const OrderConfirm = withRouter(
                                     form={form}
                                     onChange={onChangeHandler}
                                     onKeyUp={onKeyUpHandler}
-                                    delliveryServiceSelect={delliveryServiceSelect}
-                                    paymentTypeSelect={paymentTypeSelect}
+                                    delliveryServiceSelect={props.typesStore.delliveryTypes}
+                                    paymentTypeSelect={props.typesStore.paymentTypes}
                                     confirmHandler={confirmHandler}
                                 />
                             </div>

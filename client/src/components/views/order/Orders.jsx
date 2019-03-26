@@ -1,22 +1,33 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react-lite';
-import {OrderAction} from '../../../actions';
+import {OrderAction, TypesAction} from '../../../actions';
 import {OrderUser, OrderAdmin} from '.';
 
-export const Orders = observer(({userStore, orderStore}) => {
+export const Orders = observer(({userStore, orderStore, typesStore}) => {
+    useEffect(() => {
+        if (!typesStore.orderStatusTypes.length) {
+            TypesAction.getOrderStatusTypes();
+        }
+        if (!typesStore.paymentTypes.length) {
+            TypesAction.getPaymentTypes();
+        }
+        if (!typesStore.delliveryTypes.length) {
+            TypesAction.getDelliveryTypes();
+        }
+    }, []);
     useEffect(() => {
         OrderAction.getOrder();
     }, [userStore.user]);
 
     const getUserOrders = () => {
-        return orderStore.orders.map(item => <OrderUser key={item._id} {...item} />);
+        return orderStore.orders.map(item => <OrderUser key={item._id} {...item} orderStatusTypes={typesStore.orderStatusTypes} />);
     };
 
     const getAdminOrders = () => {
         return (
             <div className="accordion" id="orderAdminAccordion">
                 {orderStore.orders.map((item, i) => (
-                    <OrderAdmin key={item._id} {...item} index={i}/>
+                    <OrderAdmin key={item._id} {...item} index={i} typesStore={typesStore} />
                 ))}
             </div>
         );

@@ -42,7 +42,7 @@ export const ProductEdit = props => {
         return !!selectedCheckboxes[checkboxName];
     };
     const saveClickHandler = () => {
-        const {_id, name, description, price, salePrice, quantity, manufacture, category, subCategory} = state;
+        const {_id, name, description, price, salePrice, quantity, manufacture, category, subCategory, details} = state;
         const image = () => {
             if (selectedCheckboxes.withImage) {
                 return state.imageType === 'file' ? state.imageFile : state.imageURL;
@@ -58,6 +58,7 @@ export const ProductEdit = props => {
             manufacture,
             category,
             subCategory,
+            details,
             imageUrl: image(),
         });
         closeButton.current.click();
@@ -122,7 +123,15 @@ export const ProductEdit = props => {
             <button type="button" className="btn btn-outline-info d-flex align-items-center" data-toggle="modal" data-target="#ProductEditModal">
                 <FaEdit /> <p className="mb-0 ml-1">Edit product</p>
             </button>
-            <div className="modal fade text-primary_black" onClick={backdropClickHandler} id="ProductEditModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">
+            <div
+                className="modal fade text-primary_black"
+                onClick={backdropClickHandler}
+                id="ProductEditModal"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="productTypeLabel"
+                aria-hidden="true"
+            >
                 <div className="modal-dialog" role="document">
                     <div className="modal-content" ref={modalBody}>
                         <div className="modal-header">
@@ -137,6 +146,7 @@ export const ProductEdit = props => {
                             <Input value={state.quantity} type="number" name="quantity" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Quantity" />
                             <Input value={state.manufacture} name="manufacture" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Manufacture" />
                             <Textarea value={state.description} name="description" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Description" />
+                            <Textarea value={state.details} name="details" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Details" />
                             <Checkbox inputList={checkboxList} selectedList={selectedCheckboxes} name="withImage" onChange={onChangeHandler} labelText="" />
                             {isChecked('withImage') && imageSelector()}
                         </div>

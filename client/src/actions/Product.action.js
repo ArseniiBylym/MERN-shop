@@ -58,7 +58,12 @@ export class Product {
     addProduct = async (category, subCategory, body) => {
         try {
             const result = await fetchApi.post(URL_PATH.PRODUCT, body);
-            ProductStore.productList.push(result.data.product);
+            console.log(ProductStore.productList)
+            if (!ProductStore.productList) {
+                ProductStore.productList = [result.data.product];
+            } else {
+                ProductStore.productList.push(result.data.product);
+            }
         } catch (error) {
             console.log(error);
         }

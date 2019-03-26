@@ -14,7 +14,7 @@ const orderSchema = new Schema(
         delliveryService: {type: Number, require: true, enum: [1, 2]},
         details: {type: String, require: false},
         paymentType: {type: Number, require: true, enum: [1, 2]},
-        status: {type: String, requre: true, enum: ['processing', 'paid', 'sent', 'completed', 'rejected'], default: 'processing'},
+        status: {type: Number, requre: true, enum: [1, 2, 3, 4, 5, 6], default: 1},
     },
     {timestamps: true},
 );

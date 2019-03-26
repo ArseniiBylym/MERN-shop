@@ -9,7 +9,6 @@ import {UserStore} from '../../stores/index';
 export const Product = withRouter(
     observer(props => {
         const product = props.productStore.selectedProduct;
-        // console.log(product.averageRaiting);
 
         useEffect(() => {
             ProductAction.getProductDetails(props.match.params.prodId);
@@ -69,7 +68,7 @@ export const Product = withRouter(
                                 {product.description}
                             </div>
                             <div className="tab-pane fade" id="nav-details" role="tabpanel" aria-labelledby="Prod-details-tab">
-                                ...
+                                {product.details}
                             </div>
                             <div className="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="Prod-reviews-tab">
                                 <Reviews userStore={props.userStore} product={product} />

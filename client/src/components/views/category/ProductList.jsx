@@ -14,7 +14,6 @@ export const ProductList = withRouter(
         const [state, setState] = useState({
             sortOrder: 'name',
             sortDirrection: true,
-            gridView: 'grid',
         });
 
         const sortOrderOptions = [{name: 'Name', value: 'name'}, {name: 'Price', value: 'price'}];
@@ -63,7 +62,6 @@ export const ProductList = withRouter(
                     sortDirrection={state.sortDirrection}
                     sortDirrectionHandler={sortDirrectionHandler}
                     sortOptions={sortOrderOptions}
-                    gridView={state.gridView}
                     onChangeHandler={onChangeHandler}
                     category={category}
                     subCategory={subCategory}

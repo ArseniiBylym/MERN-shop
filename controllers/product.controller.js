@@ -13,7 +13,7 @@ exports.getProduct = async (req, res, next) => {
         if (name) {
             products = await Product.find().byName(name).select('name price imageUrl category subCategory').exec();
         } else if (category && subCategory) {
-            products = await Product.find({category, subCategory}).select({description: 0, reviews: 0, __v: 0});
+            products = await Product.find({category, subCategory}).select({description: 0, details: 0, reviews: 0, __v: 0});
         } else if (category && !subCategory) {
             products = await Product.find({category}).select({name: 1, price: 1, imageUrl: 1, category: 1});
         } else {

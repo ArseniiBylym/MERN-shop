@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import './style.scss';
 import {Redirect, NavLink} from 'react-router-dom';
@@ -7,13 +7,6 @@ import {Input} from '../../components/form/Input';
 
 export const Login = observer(({store}) => {
     const [form, setForm] = useState({email: '', password: ''});
-
-    const emailRef = useRef(null);
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         emailRef.current.focus();
-    //     }, 1000);
-    // }, []);
 
     const onChangeHandler = e => {
         setForm({
@@ -57,16 +50,7 @@ export const Login = observer(({store}) => {
                     <h4>Login form</h4>
                 </div>
                 <div className="card-body">
-                    <Input
-                        elementRef={emailRef}
-                        value={form.email}
-                        type="email"
-                        name="email"
-                        onChange={onChangeHandler}
-                        onKeyUp={onKeyUpHandler}
-                        labelText="Email"
-                        error={getError('email')}
-                    />
+                    <Input value={form.email} type="email" name="email" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Email" error={getError('email')} />
                     <Input
                         value={form.password}
                         type="password"

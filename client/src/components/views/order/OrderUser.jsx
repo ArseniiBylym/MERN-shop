@@ -26,20 +26,8 @@ export const OrderUser = withRouter(props => {
     };
 
     const getCurrentStatus = () => {
-        switch (props.status) {
-            case 'processing':
-                return 'Order in process';
-            case 'paid':
-                return 'Prepeare for sending';
-            case 'sent':
-                return 'Sent to user';
-            case 'completed':
-                return 'Order completed';
-            case 'rejected':
-                return 'Order rejected';
-            default:
-                break;
-        }
+        const status = props.orderStatusTypes.find(item => +item.value === +props.status);
+        return status.name;
     };
 
     return (

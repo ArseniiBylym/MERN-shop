@@ -7,21 +7,14 @@ import {OrderAction} from '../../../actions';
 import {Select} from '../../form';
 
 export const OrderAdmin = withRouter(props => {
+    const {delliveryTypes, paymentTypes, orderStatusTypes} = props.typesStore;
+
     const [orderStatus, setOrderStatus] = useState('');
     const [statusChanged, setStatusChanged] = useState(false);
+
     useEffect(() => {
         setOrderStatus(props.status);
     }, []);
-
-    const delliveryServiceSelect = [{name: 'Ukrposhta', value: 1}, {name: 'Nova Poshta', value: 2}];
-    const paymentTypeSelect = [{name: 'Privat 24', value: 1}, {name: 'After receiving', value: 2}];
-    const orderStatusList = [
-        {name: 'Order in process', value: 'processing'},
-        {name: 'Prepeare for sending', value: 'paid'},
-        {name: 'Sent to user', value: 'sent'},
-        {name: 'Order completed', value: 'completed'},
-        {name: 'Order rejected', value: 'rejected'},
-    ];
 
     const onClickHandler = item => e => {
         props.history.push(`/category/${item._id.category}/${item._id.subCategory}/${item._id._id}`);
@@ -41,11 +34,13 @@ export const OrderAdmin = withRouter(props => {
     };
 
     const getDelliveryService = () => {
-        return delliveryServiceSelect.find(item => item.value === props.delliveryService).name;
+        if (!delliveryTypes.length) return null;
+        return delliveryTypes.find(item => +item.value === +props.delliveryService).name;
     };
 
     const getPaymentType = () => {
-        return paymentTypeSelect.find(item => item.value === props.paymentType).name;
+        if (!paymentTypes.length) return null;
+        return paymentTypes.find(item => +item.value === +props.paymentType).name;
     };
 
     const getOrderList = () => {
@@ -91,7 +86,7 @@ export const OrderAdmin = withRouter(props => {
                             Total order price: <span className="font-weight-bold">$ {getTotalPrice()}</span>
                         </p>
                         <hr />
-                        {orderStatus && <Select name="orderStaus" labelText="Order status:" selectList={orderStatusList} selectedValue={orderStatus} onChange={onChangeHandler} />}
+                        {orderStatus && <Select name="orderStaus" labelText="Order status:" selectList={orderStatusTypes} selectedValue={orderStatus} onChange={onChangeHandler} />}
                         <div className="d-flex justify-content-between mt-4 w-100">
                             {statusChanged && (
                                 <button className="btn btn-outline-info" onClick={updateOrderHandler}>
@@ -116,20 +111,9 @@ export const OrderAdmin = withRouter(props => {
     };
 
     const getCurrentStatus = () => {
-        switch (props.status) {
-            case 'processing':
-                return 'Order in process';
-            case 'paid':
-                return 'Prepeare for sending';
-            case 'sent':
-                return 'Sent to user';
-            case 'completed':
-                return 'Order completed';
-            case 'rejected':
-                return 'Order rejected';
-            default:
-                break;
-        }
+        if (!orderStatusTypes || !orderStatus) return null;
+        const status = orderStatusTypes.find(item => +item.value === +orderStatus);
+        return status.name;
     };
 
     return (
@@ -151,7 +135,7 @@ export const OrderAdmin = withRouter(props => {
                     Details <FaAngleDown />
                 </div>
             </div>
-            <div id={`collapse${props.index}`} class="collapse" aria-labelledby={`heading${props.index}`} data-parent="#orderAdminAccordion">
+            <div id={`collapse${props.index}`} className="collapse" aria-labelledby={`heading${props.index}`} data-parent="#orderAdminAccordion">
                 <div className="card-body">{orderDetails()}</div>
             </div>
         </div>

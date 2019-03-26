@@ -1,5 +1,4 @@
 import React, {Fragment, useState, useRef} from 'react';
-import {IoIosAdd} from 'react-icons/io';
 import {Input} from '../form';
 import {ProductAction} from '../../actions/index';
 

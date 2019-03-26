@@ -10,6 +10,9 @@ export const URL_PATH = {
     PRODUCT_COMMENT: `/api/product/comment`,
     CART: `/api/cart`,
     ORDER: `/api/order`,
+    ORDER_STATUS_TYPES: `/api/type/orderStatus`,
+    DELLIVERY_TYPES: `/api/type/dellivery`,
+    PAYMENT_TYPES: `/api/type/payment`,
 };
 
 class FetchApi {
