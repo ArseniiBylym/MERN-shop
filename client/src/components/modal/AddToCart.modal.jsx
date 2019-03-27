@@ -1,9 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {CartAction} from '../../actions';
+import {NotificationStore} from '../../stores';
 import {Input} from '../form';
 
 export const AddToCart = ({product, text}) => {
     const [quantity, setQuantity] = useState('1');
+    const notificationStore = useContext(NotificationStore);
 
     const modalBody = useRef(null);
     const closeButton = useRef(null);
@@ -17,8 +19,9 @@ export const AddToCart = ({product, text}) => {
         closeModal();
     };
 
-    const addToCartHandler = () => {
-        CartAction.addToCart(product, quantity);
+    const addToCartHandler = async () => {
+        await CartAction.addToCart(product, quantity);
+        notificationStore.addNotification('Product added to the cart!', 'success');
         closeModal();
     };
 

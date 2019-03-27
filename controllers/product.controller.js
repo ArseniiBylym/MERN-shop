@@ -6,11 +6,13 @@ const Product = require('../models/Product.model');
 // @desc    Get all products
 // @access  Public
 exports.getProduct = async (req, res, next) => {
-    const {category, subCategory, name} = req.query;
+    const {category, subCategory, name, saleProduct} = req.query;
     let products = [];
     let totalCount = 0;
     try {
-        if (name) {
+        if (saleProduct) {
+            products = await Product.find({salePrice: {$gt: 0}}).select('name price salePrice imageUrl category subCategory').exec();
+        } else if (name) {
             products = await Product.find().byName(name).select('name price imageUrl category subCategory').exec();
         } else if (category && subCategory) {
             products = await Product.find({category, subCategory}).select({description: 0, details: 0, reviews: 0, __v: 0});

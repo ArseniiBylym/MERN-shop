@@ -1,8 +1,9 @@
-import React, {Fragment, useState, useRef} from 'react';
+import React, {Fragment, useState, useRef, useContext} from 'react';
 import {Input, FileInput, Radiobutton, Textarea} from '../form';
 import {ImagePreview} from '../views';
-import {ProductAction} from '../../actions/index';
+import {ProductAction} from '../../actions';
 import {toBase64} from '../../utils/helpers';
+import {NotificationStore} from '../../stores';
 
 const defaultState = {
     name: '',
@@ -19,6 +20,7 @@ const defaultState = {
 
 export const ProductItem = ({category, subCategory}) => {
     const [state, setState] = useState({...defaultState});
+    const notificationStore = useContext(NotificationStore);
 
     const radioInputs = [{label: 'Select file', value: 'file'}, {label: 'Select URL', value: 'url'}];
 
@@ -33,9 +35,9 @@ export const ProductItem = ({category, subCategory}) => {
         resetState();
     };
 
-    const saveClickHandler = () => {
+    const saveClickHandler = async () => {
         const {name, description, price, salePrice, quantity, manufacture, details} = state;
-        ProductAction.addProduct(category, subCategory, {
+        await ProductAction.addProduct(category, subCategory, {
             name,
             description,
             price,
@@ -47,6 +49,8 @@ export const ProductItem = ({category, subCategory}) => {
             details,
             imageUrl: state.imageType === 'file' ? state.imageFile : state.imageURL,
         });
+        notificationStore.addNotification('New product was successfully added', 'success');
+
         closeButton.current.click();
     };
 

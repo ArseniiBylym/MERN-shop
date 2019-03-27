@@ -5,9 +5,10 @@ import {Modal} from '../../modal';
 
 export const ProductCard = props => {
     const {_id, price, salePrice, name, imageUrl, category, subCategory} = props;
+    console.log(salePrice);
     return (
         <div key={_id} className="ProductCard card row flex-row text-primary-black my-2">
-            {salePrice && <div className="saleLabel saleLabel__topLeft">SALE</div>}
+            {salePrice ? <div className="saleLabel saleLabel__topLeft">SALE</div> : null}
             <div className="ProductCard__image col-12 col-md-12 col-lg-3 p-2 d-flex align-items-center">
                 <NavLink to={`/category/${category}/${subCategory}/${_id}`}>
                     <img src={imageUrl || DefaultProductImage} alt="Product" className="w-100" height="auto" />

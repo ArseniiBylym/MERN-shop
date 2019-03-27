@@ -55,10 +55,15 @@ export class Product {
         }
     };
 
+    clearProductList = () => {
+        ProductStore.productList = [];
+        ProductStore.productListLength = 0;
+    };
+
     addProduct = async (category, subCategory, body) => {
         try {
             const result = await fetchApi.post(URL_PATH.PRODUCT, body);
-            console.log(ProductStore.productList)
+            console.log(ProductStore.productList);
             if (!ProductStore.productList) {
                 ProductStore.productList = [result.data.product];
             } else {
@@ -129,7 +134,18 @@ export class Product {
     clearSearchProduct = () => {
         ProductStore.foundList = [];
         ProductStore.foundListVisible = false;
-    }
+    };
+
+    getSaleProduct = async () => {
+        try {
+            const saleProduct = (await fetchApi.get(URL_PATH.PRODUCT, false, {saleProduct: true})).data;
+            ProductStore.saleProduct = saleProduct.products;
+            ProductStore.saleProductLength = saleProduct.totalCount;
+            console.log(saleProduct);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
 
 decorate(Product, {
@@ -143,4 +159,5 @@ decorate(Product, {
     clearProductDetails: action,
     addReview: action,
     searchProduct: action,
+    getSaleProduct: action,
 });

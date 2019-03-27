@@ -12,10 +12,12 @@ import {ProductStore, UserStore, CartStore, OrderStore, TypesStore} from '../../
 
 // Styles
 import './style.scss';
+import {NotificationContainer} from '../../components/notification';
 
 export const MainRouter = props => {
     return (
         <div className="MainRouter container d-flex flex-column">
+            <NotificationContainer />
             <div className="MainRouter__header">
                 <MainHeader userStore={UserStore} cartStore={CartStore} />
                 <NavBar productStore={ProductStore} userStore={UserStore} />

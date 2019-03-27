@@ -27,7 +27,7 @@ export const Product = withRouter(
                     </div>
                     <div className="Product__header row m-3">
                         <div className="image col-12 col-md-9 position-relative p-0">
-                            {product.salePrice && <div className="saleLabel saleLabel__topLeft">SALE</div>}
+                            {product.salePrice ? <div className="saleLabel saleLabel__topLeft">SALE</div> : null}
                             <Modal.ImageDetails imageUrl={product.imageUrl} />
                         </div>
                         <div className="byeSection col-12 col-md-3 p-2 py-3 text-center">

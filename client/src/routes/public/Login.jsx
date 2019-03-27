@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {observer} from 'mobx-react-lite';
 import './style.scss';
 import {Redirect, NavLink} from 'react-router-dom';
 import {UserAction} from '../../actions';
+import {NotificationStore} from '../../stores';
 import {Input} from '../../components/form/Input';
 
 export const Login = observer(({store}) => {
     const [form, setForm] = useState({email: '', password: ''});
+    const notificationStore = useContext(NotificationStore);
 
     const onChangeHandler = e => {
         setForm({
@@ -41,6 +43,7 @@ export const Login = observer(({store}) => {
 
     if (!store.dataFetched) return null;
     if (store.user) {
+        notificationStore.addNotification(`You loged in as ${store.user.name}`, 'success');
         return <Redirect to="/" />;
     }
     return (

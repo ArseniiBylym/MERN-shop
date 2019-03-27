@@ -20,6 +20,9 @@ export const ProductList = withRouter(
 
         useEffect(() => {
             ProductAction.getProductList({category, subCategory});
+            return () => {
+                ProductAction.clearProductList();
+            };
         }, [category, subCategory]);
 
         const onChangeHandler = e => {

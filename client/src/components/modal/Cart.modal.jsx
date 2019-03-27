@@ -1,8 +1,9 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
 import {observer} from 'mobx-react-lite';
 import {FaCartPlus} from 'react-icons/fa';
 import {IoIosCloseCircleOutline} from 'react-icons/io';
 import {withRouter} from 'react-router';
+import {NotificationStore} from '../../stores';
 import {CartAction} from '../../actions';
 
 export const Cart = withRouter(
@@ -10,10 +11,12 @@ export const Cart = withRouter(
         useEffect(() => {
             CartAction.initCart();
         }, []);
+        const notificationStore = useContext(NotificationStore);
 
-        const onRemoveHandler = productId => e => {
+        const onRemoveHandler = productId => async e => {
             if (cartStore.totalLength === 1) closeModal();
-            CartAction.removeFromCart(productId);
+            await CartAction.removeFromCart(productId);
+            notificationStore.addNotification('Product removed from the cart!', 'success');
         };
 
         const toOrderHandler = () => {

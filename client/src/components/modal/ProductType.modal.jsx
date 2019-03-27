@@ -1,9 +1,11 @@
-import React, {Fragment, useState, useRef} from 'react';
+import React, {Fragment, useState, useRef, useContext} from 'react';
 import {Input} from '../form';
+import {NotificationStore} from '../../stores';
 import {ProductAction} from '../../actions/index';
 
 export const ProductType = () => {
     const [categoryName, setCategoryName] = useState('');
+    const notificationStore = useContext(NotificationStore);
 
     const modalBody = useRef(null);
     const closeButton = useRef(null);
@@ -13,9 +15,10 @@ export const ProductType = () => {
         setCategoryName('');
     };
 
-    const saveClickHandler = () => {
+    const saveClickHandler = async () => {
         if (!categoryName) return false;
-        ProductAction.addCategory(categoryName);
+        await ProductAction.addCategory(categoryName);
+        notificationStore.addNotification('New group successfully added', 'success');
         closeButton.current.click();
     };
 

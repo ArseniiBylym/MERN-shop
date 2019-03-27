@@ -1,9 +1,10 @@
 /* eslint-disable indent */
-import React, {Fragment, useState, useRef, useEffect} from 'react';
+import React, {Fragment, useState, useRef, useEffect, useContext} from 'react';
 import {FaEdit} from 'react-icons/fa';
 import {Input, FileInput, Radiobutton, Textarea, Checkbox} from '../form';
 import {ImagePreview} from '../views';
-import {ProductAction} from '../../actions/index';
+import {ProductAction} from '../../actions';
+import {NotificationStore} from '../../stores';
 import {toBase64} from '../../utils/helpers';
 
 const defaultImageState = {
@@ -15,6 +16,7 @@ const defaultImageState = {
 export const ProductEdit = props => {
     const [state, setState] = useState(null);
     const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+    const notificationStore = useContext(NotificationStore);
 
     useEffect(() => {
         setState({
@@ -41,7 +43,7 @@ export const ProductEdit = props => {
     const isChecked = checkboxName => {
         return !!selectedCheckboxes[checkboxName];
     };
-    const saveClickHandler = () => {
+    const saveClickHandler = async () => {
         const {_id, name, description, price, salePrice, quantity, manufacture, category, subCategory, details} = state;
         const image = () => {
             if (selectedCheckboxes.withImage) {
@@ -49,7 +51,7 @@ export const ProductEdit = props => {
             }
             return undefined;
         };
-        ProductAction.editProduct(_id, {
+        await ProductAction.editProduct(_id, {
             name,
             description,
             price,
@@ -61,6 +63,7 @@ export const ProductEdit = props => {
             details,
             imageUrl: image(),
         });
+        notificationStore.addNotification('Product was successfully updated', 'success');
         closeButton.current.click();
     };
 

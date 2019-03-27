@@ -56,13 +56,24 @@
 
 .Product{
     &__details{
-        a {
-            text-decoration: none;
-            &:hover,
-            &.active{
-                color: white;
-                background-color: rgba(61, 61, 61, .8);
+        nav {
+            a {
+                text-decoration: none;
+                &:hover,
+                &.active{
+                    color: white;
+                    background-color: rgba(61, 61, 61, .8);
+                }
             }
         }
+    }
+}
+
+.Home {
+    .container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 }

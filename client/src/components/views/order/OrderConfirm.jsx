@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {observer} from 'mobx-react-lite';
 import {toJS} from 'mobx';
 import {withRouter} from 'react-router';
 import {OrderConfirmList, OrderConfirmForm} from '.';
+import {NotificationStore} from '../../../stores';
 import {OrderAction, TypesAction} from '../../../actions';
 
 const defaultForm = {
@@ -17,6 +18,7 @@ const defaultForm = {
 export const OrderConfirm = withRouter(
     observer(props => {
         const [form, setForm] = useState(defaultForm);
+        const notificationStore = useContext(NotificationStore);
 
         useEffect(() => {
             if (!props.typesStore.paymentTypes.length) {
@@ -62,6 +64,7 @@ export const OrderConfirm = withRouter(
             });
             try {
                 await OrderAction.postOrder({...form, productList});
+                notificationStore.addNotification('New order successfully created!', 'success');
                 props.history.push('/');
             } catch (error) {
                 console.log(error);

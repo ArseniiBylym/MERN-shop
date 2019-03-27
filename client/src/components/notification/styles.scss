@@ -1,0 +1,58 @@
+@keyframes showNotification {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-150%);
+        opacity: 1;
+    }
+}
+
+@keyframes hideNitification {
+    0% {
+        transform: translateX(-150%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+.NotificationContainer {
+    position: absolute;
+    z-index: 100;
+    bottom: 50px;
+    right: 50px;
+
+    .Notification{
+        position: absolute;
+        bottom: 50px;
+        right: -300px;
+        padding: 10px 20px;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 5px;
+        color: black;
+        transition: all .5s ease;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateX(0);
+        
+        &.show {
+            animation: showNotification .5s ease forwards;
+        }
+        &.hide{
+            animation: hideNitification .5s ease forwards;
+        }
+
+        .close-button{
+            svg {
+                display: block;
+            }
+        }
+    }
+}

@@ -8,3 +8,4 @@ export * from './category/ProductListHeader';
 export * from './product/ProductCard';
 export * from './product/Reviews';
 export * from './product/ReviewItem';
+export * from './product/SaleContainer';

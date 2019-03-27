@@ -20,6 +20,9 @@ export class Product {
     foundList = [];
     foundListVisible = false;
     foundListLength = 0;
+
+    saleProduct = [];
+    saleProductLength = 0;
 }
 
 decorate(Product, {
@@ -32,4 +35,6 @@ decorate(Product, {
     foundList: observable,
     foundListVisible: observable,
     foundListLength: observable,
+    saleProduct: observable,
+    saleProductLength: observable,
 });

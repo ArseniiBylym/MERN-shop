@@ -1,7 +1,8 @@
-import React, {Fragment, useState, useRef} from 'react';
+import React, {Fragment, useState, useRef, useContext} from 'react';
 import {Input, FileInput, Radiobutton} from '../form';
 import {ImagePreview} from '../views';
 import {ProductAction} from '../../actions/index';
+import {NotificationStore} from '../../stores';
 import {toBase64} from '../../utils/helpers';
 
 const defaultState = {
@@ -13,6 +14,7 @@ const defaultState = {
 
 export const ProductSubType = props => {
     const [state, setState] = useState({...defaultState});
+    const notificationStore = useContext(NotificationStore);
 
     const radioInputs = [{label: 'Select file', value: 'file'}, {label: 'Select URL', value: 'url'}];
 
@@ -27,12 +29,14 @@ export const ProductSubType = props => {
         resetState();
     };
 
-    const saveClickHandler = () => {
+    const saveClickHandler = async () => {
         if (!state.name || (!state.imageFile && !state.imageURL)) return false;
-        ProductAction.addSubCategory(props.groupName, {
+        await ProductAction.addSubCategory(props.groupName, {
             name: state.name,
             image: state.imageType === 'file' ? state.imageFile : state.imageURL,
         });
+        notificationStore.addNotification('New product category was successfully added', 'success');
+
         closeButton.current.click();
     };
 

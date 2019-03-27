@@ -1,9 +1,10 @@
 /* eslint-disable indent */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import moment from 'moment';
 import {withRouter} from 'react-router';
 import {FaAngleDown} from 'react-icons/fa';
 import {OrderAction} from '../../../actions';
+import {NotificationStore} from '../../../stores';
 import {Select} from '../../form';
 
 export const OrderAdmin = withRouter(props => {
@@ -11,6 +12,7 @@ export const OrderAdmin = withRouter(props => {
 
     const [orderStatus, setOrderStatus] = useState('');
     const [statusChanged, setStatusChanged] = useState(false);
+    const notificationStore = useContext(NotificationStore);
 
     useEffect(() => {
         setOrderStatus(props.status);
@@ -25,12 +27,14 @@ export const OrderAdmin = withRouter(props => {
         if (!statusChanged) setStatusChanged(true);
     };
 
-    const updateOrderHandler = () => {
-        OrderAction.updateOrder(props._id, orderStatus);
+    const updateOrderHandler = async () => {
+        await OrderAction.updateOrder(props._id, orderStatus);
+        notificationStore.addNotification('Order shatus updated', 'success');
     };
 
-    const deleteOrderHandler = () => {
-        OrderAction.deleteOrder(props._id);
+    const deleteOrderHandler = async () => {
+        await OrderAction.deleteOrder(props._id);
+        notificationStore.addNotification('Order was deleted', 'success');
     };
 
     const getDelliveryService = () => {
