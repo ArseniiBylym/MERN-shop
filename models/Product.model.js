@@ -6,9 +6,9 @@ const productSchema = new Schema({
     price: {type: Number, require: true, min: 0},
     quantity: {type: Number, require: true, min: 0, default: 1},
     category: {type: String, requre: true, trim: true, maxlength: 20},
+    subCategory: {type: String, require: true},
     details: String,
     salePrice: Number,
-    subCategory: String,
     manufacture: String,
     imageUrl: String,
     reviews: [

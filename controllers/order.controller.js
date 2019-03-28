@@ -11,9 +11,11 @@ exports.getOrder = async (req, res, next) => {
         if (isAdmin) {
             order = await Order.find()
                 .sort({createdAt: -1})
-                .populate('productList._id', 'name price category subCategory');
+                .select('-__v')
+                .populate('productList.product', 'name price category subCategory')
+                .exec();
         } else if (email) {
-            order = await Order.find({email: email}).sort({updatedAt: -1}).populate('productList._id', 'name price category subCategory');
+            order = await Order.find({email: email}).sort({updatedAt: -1}).select('-__v').populate('productList.product', 'name price category subCategory');
         }
         return res.status(200).json({message: `All orders`, order});
     } catch (error) {

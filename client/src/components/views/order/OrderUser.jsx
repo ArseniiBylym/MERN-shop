@@ -5,22 +5,22 @@ import {withRouter} from 'react-router';
 
 export const OrderUser = withRouter(props => {
     const onClickHandler = item => e => {
-        props.history.push(`/category/${item._id.category}/${item._id.subCategory}/${item._id._id}`);
+        props.history.push(`/category/${item.product.category}/${item.product.subCategory}/${item.product._id}`);
     };
     const tableRows = () => {
         return props.productList.map((item, i) => (
-            <tr key={item._id._id} className="cursor-pointer" onClick={onClickHandler(item)}>
+            <tr key={item.product._id} className="cursor-pointer" onClick={onClickHandler(item)}>
                 <th scope="row">{i + 1}</th>
-                <td>{item._id.name}</td>
+                <td>{item.product.name}</td>
                 <td>{item.quantity}</td>
-                <td>$ {item._id.price.toFixed(2)}</td>
+                <td>$ {item.product.price.toFixed(2)}</td>
             </tr>
         ));
     };
 
     const getTotalPrice = () => {
         const total = props.productList.reduce((prev, current) => {
-            return prev + current._id.price * current.quantity;
+            return prev + current.product.price * current.quantity;
         }, 0);
         return total.toFixed(2);
     };

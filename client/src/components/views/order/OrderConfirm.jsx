@@ -58,7 +58,7 @@ export const OrderConfirm = withRouter(
         const confirmHandler = async () => {
             const productList = toJS(props.cartStore.cart).map(item => {
                 return {
-                    _id: item.product._id,
+                    product: item.product._id,
                     quantity: item.quantity,
                 };
             });

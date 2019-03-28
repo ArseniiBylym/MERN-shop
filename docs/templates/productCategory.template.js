@@ -18,9 +18,11 @@ const router = Router();
  *      "message": "Product categories",
  *      "productCategory": [
  *          {
- *              "_id": "23432hkjhkjhk4234hj"
- *              "categoryName": "bike",
- *              "subCategories": ["mount", "road", "city"]
+ *              "categoryName": "bikes",
+ *              "subCategories": [
+ *                  {"name": "Road", "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAS..."},
+ *                  {"name": "City", "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAS..."}
+ *              ]
  *          }
  * }
  * @apiError CategoriesNotFound Can't get list of product categories
@@ -41,12 +43,14 @@ router.get('/', productCategoryController.getProductCategory);
  * @apiExample {js} Request example:
  *  http://localhost:5000/api/product-category
  *
- * @apiParam {String} categoryName required - Category name.
- * @apiParam {Array} subCategories optional - Sub categories array.
+ * @apiParam {String} categoryName Category name.
+ * @apiParam {Array} [subCategories] Sub categories array.
  * @apiParamExample {json} Request-Example:
  * {
- *      "categoryName" : "bike",
- *      "subCategories": ["mount", "road", "city"]
+ *      "categoryName" : "bikes",
+ *      "subCategories": [
+ *          {"name": "Road", "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAS..."}
+ *       ]
  * }
  *
  * @apiSuccessExample {json} 200 Success-Response:
@@ -57,7 +61,14 @@ router.get('/', productCategoryController.getProductCategory);
  *          {
  *              "_id": "23432hkjhkjhk4234hj"
  *              "categoryName": "bike",
- *              "subCategories": ["mount", "road", "city"]
+ *              "__v": 0,
+ *              "subCategories": [
+ *                  {
+ *                      "name": "bikes", 
+ *                      "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAS...", 
+ *                      "_id": "skjdfh23kjkj3h"
+ *                  }
+ *              ]
  *          }
  * }
  * @apiError ProductCategoryCreationFailed Can't add new product category type
@@ -69,43 +80,5 @@ router.get('/', productCategoryController.getProductCategory);
  * }
  */
 router.post('/', isAuth, isAdmin, productCategoryController.addProductCategory);
-
-/**
- * @api {delete} /api/product-category Delete product category
- * @apiName DeleteCategory
- * @apiGroup ProductCategory
- * @apiPermission admin
- * @apiExample {js} Request example:
- *  http://localhost:5000/api/product-category
- *
- * @apiParam {String} categoryId required - Product category id.
- * @apiParam {String} subCategoryName optional - Product subcategory name.
- *
- * @apiParamExample {js} Request-Example:
- *  http://localhost:5000/api/service?categoryId=123&subCategoryName=city
- * @apiParamExample {js} Request-Example:
- *  http://localhost:5000/api/service?categoryId=123
- *
- * @apiSuccessExample {json} 200 Success-Response:
- *  HTTP/1.1 200 OK
- * {
- *      "message": "Category was successfully deleted",
- *      "categoryId": "123"
- * }
- * @apiSuccessExample {json} 200 Success-Response:
- *  HTTP/1.1 200 OK
- * {
- *      "message": "SubCategory was successfully deleted",
- *      "name": "city"
- * }
- *
- * @apiError ProductCategoryDelationFailed Can't delete product category
- * @apiErrorExample 500-response:
- *  HTTP/1.1 500 Internal server error
- * {
- *      "message": "Produce category delation failed"
- * }
- */
-router.delete('/', isAuth, isAdmin, productCategoryController.deleteProductCategory);
 
 module.exports = router;

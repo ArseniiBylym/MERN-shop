@@ -8,7 +8,7 @@ export class Cart {
         if (!cartId) return false;
         try {
             const result = await fetchApi.get(`${URL_PATH.CART}/${cartId}`);
-            CartStore.cart = result.data.cart.cart;
+            CartStore.cart = result.data.cart;
         } catch (error) {
             console.log(error);
         }
@@ -40,7 +40,7 @@ export class Cart {
         }
 
         const cartId = localStorage.getItem('cartId');
-        const cart = toJS(CartStore.cart);
+        const cart = toJS(CartStore.cart).map(item => ({quantity: item.quantity, product: item.product._id}));
         if (cartId) {
             try {
                 await fetchApi.put(URL_PATH.CART, {cartId, cart});

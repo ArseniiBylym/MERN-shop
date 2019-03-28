@@ -8,7 +8,7 @@ export const CategoryGrid = ({category, productStore}) => {
         if (!list) return null;
         return list.map(item => {
             return (
-                <NavLink to={`/category/${category}/${item.name}`} key={item.name} className="col-12 col-md-6 col-lg-4">
+                <NavLink to={`/category/${category}/${item.name}`} key={item.name} className="col-12 col-md-6 col-lg-6">
                     <div className="card w-100 py-3">
                         <img src={item.image} alt={item.name} className="w-100 h-auto my-2" />
                         <h5 className="text-center upperCase py-2 my-2">{item.name}</h5>

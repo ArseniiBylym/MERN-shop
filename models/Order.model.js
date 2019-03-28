@@ -6,7 +6,7 @@ const orderSchema = new Schema(
         email: {type: String, require: true},
         productList: [
             {
-                _id: {type: Schema.Types.ObjectId, ref: 'Product', require: true},
+                product: {type: Schema.Types.ObjectId, ref: 'Product', require: true},
                 quantity: {type: Number, require: true, default: 1},
             },
         ],

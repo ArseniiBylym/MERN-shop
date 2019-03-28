@@ -7,6 +7,5 @@ const router = Router();
 
 router.get('/', productCategoryController.getProductCategory);
 router.post('/', isAuth, isAdmin, productCategoryController.addProductCategory);
-router.delete('/', isAuth, isAdmin, productCategoryController.deleteProductCategory);
 
 module.exports = router;

@@ -19,7 +19,7 @@ export const OrderAdmin = withRouter(props => {
     }, []);
 
     const onClickHandler = item => e => {
-        props.history.push(`/category/${item._id.category}/${item._id.subCategory}/${item._id._id}`);
+        props.history.push(`/category/${item.product.category}/${item.product.subCategory}/${item.product._id}`);
     };
 
     const onChangeHandler = e => {
@@ -51,8 +51,8 @@ export const OrderAdmin = withRouter(props => {
     const getOrderList = () => {
         return props.productList.map((item, i) => {
             return (
-                <p key={item._id._id} onClick={onClickHandler(item)} className="cursor-pointer">
-                    #{i + 1} - {item._id.name} - {item.quantity} x ${item._id.price}
+                <p key={item.product._id} onClick={onClickHandler(item)} className="cursor-pointer">
+                    #{i + 1} - {item.product.name} - {item.quantity} x ${item.product.price}
                 </p>
             );
         });
@@ -110,7 +110,7 @@ export const OrderAdmin = withRouter(props => {
 
     const getTotalPrice = () => {
         const total = props.productList.reduce((prev, current) => {
-            return prev + current._id.price * current.quantity;
+            return prev + current.product.price * current.quantity;
         }, 0);
         return total.toFixed(2);
     };

@@ -4,7 +4,7 @@ exports.getCart = async (req, res, next) => {
     const {cartId} = req.params;
     try {
         const cart = await Cart.findById(cartId).select({__v: 0}).populate('cart.product', 'name imageUrl price').exec();
-        res.status(200).json({cart})
+        res.status(200).json(cart)
     } catch (error) {
         error.message = `Can't get user cart`;
         next(error);
@@ -29,7 +29,7 @@ exports.putCart = async (req, res, next) => {
         const cartItem = await Cart.findById(cartId).exec();
         cartItem.cart = cart;
         const updatedCart = cartItem.save();
-        res.status(200).json({message: `Cart successfully updated`, cart: updatedCart})
+        res.status(200).json({message: `Cart successfully updated`, cart: cartItem.cart})
 
     } catch (error) {
         error.message = `Failed to update cart`;
@@ -41,7 +41,7 @@ exports.deleteCart = async (req, res, next) => {
     const {cartId} = req.params;
     try {
         const deletedCart = Cart.findByIdAndDelete(cartId).exec();
-        res.status(200).json({message: `Cart was successfully deleted`, data: deletedCart})
+        res.status(200).json({message: `Cart was successfully deleted`})
     } catch (error) {
         error.message = `Failed to delete cart`;
         next(error);
