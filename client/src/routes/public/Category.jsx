@@ -33,12 +33,12 @@ export const Category = withRouter(
 
         if (!productStore || !userStore) return null;
         return (
-            <div className="Category container-fluid row">
-                <div className="Category__sidebar col-4">
+            <div className="Category container-fluid row mx-0">
+                <div className="Category__sidebar col-12 col-md-4">
                     <ul className="list-group my-3">{subCategoriesList()}</ul>
                     {adminAddCategoryButton()}
                 </div>
-                <div className="Category__content col-8 my-3">
+                <div className="Category__content co-12 col-md-8 my-3">
                     <Switch>
                         <Route exact path={`/category/${categoryName}`} render={() => <CategoryGrid category={categoryName} productStore={productStore} />} />
                         <Route path={`/category/:categoryName/:subCategoryName`} render={() => <ProductList isAdmin={userStore.isAdmin} productStore={productStore} />} />

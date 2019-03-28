@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React, {Fragment, useState, useRef, useEffect, useContext} from 'react';
-import {FaEdit} from 'react-icons/fa';
+import {MdModeEdit} from 'react-icons/md';
 import {Input, FileInput, Radiobutton, Textarea, Checkbox} from '../form';
 import {ImagePreview} from '../views';
 import {ProductAction} from '../../actions';
@@ -123,8 +123,8 @@ export const ProductEdit = props => {
     if (!state) return null;
     return (
         <Fragment>
-            <button type="button" className="btn btn-outline-info d-flex align-items-center" data-toggle="modal" data-target="#ProductEditModal">
-                <FaEdit /> <p className="mb-0 ml-1">Edit product</p>
+            <button type="button" className="btn btn-outline-danger d-flex align-items-center" data-toggle="modal" data-target="#ProductEditModal">
+                <MdModeEdit /> <p className="mb-0 ml-1">Edit product</p>
             </button>
             <div
                 className="modal fade text-primary_black"

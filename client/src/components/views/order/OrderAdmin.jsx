@@ -30,6 +30,7 @@ export const OrderAdmin = withRouter(props => {
     const updateOrderHandler = async () => {
         await OrderAction.updateOrder(props._id, orderStatus);
         notificationStore.addNotification('Order shatus updated', 'success');
+        setStatusChanged(false);
     };
 
     const deleteOrderHandler = async () => {
@@ -62,7 +63,7 @@ export const OrderAdmin = withRouter(props => {
             <div className="container">
                 <div className="row">
                     <div className="col-12 col-md-6">
-                        <h6 className="text-primary mb-3">Order info</h6>
+                        <h5 className="text-info mb-3">Order info</h5>
                         <p>
                             Customer name: <span className="font-weight-bold">{props.name}</span>
                         </p>
@@ -83,7 +84,7 @@ export const OrderAdmin = withRouter(props => {
                         </p>
                     </div>
                     <div className="col-12 col-md-6">
-                        <h6 className="text-primary mb-3">Order list</h6>
+                        <h5 className="text-info mb-3">Order list</h5>
                         {getOrderList()}
                         <hr />
                         <p>

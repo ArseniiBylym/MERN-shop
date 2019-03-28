@@ -8,7 +8,6 @@ const productCategorySchema = new Schema({
             image: {type: String, require: false}
         }
     ]
-        // {type: Array, require: true, default: []}],
 });
 
 module.exports = model('Product_category', productCategorySchema);

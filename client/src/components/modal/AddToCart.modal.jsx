@@ -58,7 +58,7 @@ export const AddToCart = ({product, text}) => {
     if (!product || !quantity) return null;
     return (
         <>
-            <div className="byeButton btn btn-primary cursor-pointer w-100" data-toggle="modal" data-target={`#AddToCartModal-${product._id}`}>
+            <div className="buyButton btn btn-primary cursor-pointer w-100" data-toggle="modal" data-target={`#AddToCartModal-${product._id}`}>
                 {text}
             </div>
             <div

@@ -95,7 +95,7 @@ export const ProductItem = ({category, subCategory}) => {
 
     return (
         <Fragment>
-            <button type="button" className="btn btn-outline-info" data-toggle="modal" data-target="#ProductItemModal">
+            <button type="button" className="btn btn-outline-danger" data-toggle="modal" data-target="#ProductItemModal">
                 + Add product
             </button>
             <div className="modal fade" onClick={backdropClickHandler} id="ProductItemModal" tabIndex="-1" role="dialog" aria-labelledby="productTypeLabel" aria-hidden="true">

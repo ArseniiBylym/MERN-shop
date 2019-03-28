@@ -69,12 +69,12 @@ export const Reviews = observer(({userStore, product}) => {
                     </button>
                 </>
             ) : userStore.user && isUserLeftComment() ? (
-                <p className="text-info">You've already left you're comment</p>
+                <p className="text-dark">You've already left you're review about this product</p>
             ) : (
-                <p className="text-info">
+                <p className="text-dark">
                     To be able to leave comments you need to{' '}
                     <Link to="/login">
-                        <button className="btn btn-outline-info">log in</button>
+                        <button className="btn btn-outline-dark">log in</button>
                     </Link>
                 </p>
             )}

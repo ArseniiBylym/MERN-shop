@@ -5,12 +5,8 @@ const {errorHandler, errorValidationHandlerMap} = require('../utils/helpers');
 
 const User = require('../models/User.model');
 
-// @route   GET api/user
-// @desc    Get user data
-// @access  Private
 exports.getUser = async (req, res, next) => {
     try {
-        // const user = await User.findById(req.user.id).select({password: 0});
         const token = req.token;
         const user = await User.findById(req.user.id).select('-password -__v');
         if (!user) throw new Error(`User not found`);
@@ -21,9 +17,6 @@ exports.getUser = async (req, res, next) => {
     }
 };
 
-// @route   POST api/user/signup
-// @desc    POST create new user
-// @access  Public
 exports.signupUser = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
@@ -36,12 +29,6 @@ exports.signupUser = async (req, res, next) => {
         if (existedUser) {
             return res.status(400).json({message: 'User already exists', errors: [{field: 'email', errorMessage: 'User already exists'}]})
         }
-        // if (existedUser) errorHandler(`User already exists`, 400);
-        // {
-        //     const error = new Error(`User already exists`);
-        //     error.statusCode = 400;
-        //     throw error;
-        // }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             name,
@@ -67,9 +54,6 @@ exports.signupUser = async (req, res, next) => {
     }
 };
 
-// @route   POST api/user
-// @desc    POST login user
-// @access  Public
 exports.loginUser = async (req, res, next) => {
     const {email, password} = req.body;
 

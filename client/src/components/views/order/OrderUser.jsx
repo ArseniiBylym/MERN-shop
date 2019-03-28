@@ -27,7 +27,7 @@ export const OrderUser = withRouter(props => {
 
     const getCurrentStatus = () => {
         const status = props.orderStatusTypes.find(item => +item.value === +props.status);
-        return status.name;
+        return status ? status.name : '';
     };
 
     return (

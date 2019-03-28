@@ -14,7 +14,6 @@ exports.postTypes = async (req, res, next) => {
     const {types} = req.body;
     try {
         const result = await Type.insertMany(types);
-        console.log(result);
         res.status(200).json(result);
     } catch (error) {
         next(error);

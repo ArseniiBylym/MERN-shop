@@ -2,9 +2,6 @@ const {validationResult} = require('express-validator/check');
 
 const Product = require('../models/Product.model');
 
-// @route   GET api/product
-// @desc    Get all products
-// @access  Public
 exports.getProduct = async (req, res, next) => {
     const {category, subCategory, name, saleProduct} = req.query;
     let products = [];
@@ -15,11 +12,11 @@ exports.getProduct = async (req, res, next) => {
         } else if (name) {
             products = await Product.find().byName(name).select('name price imageUrl category subCategory').exec();
         } else if (category && subCategory) {
-            products = await Product.find({category, subCategory}).select({description: 0, details: 0, reviews: 0, __v: 0});
+            products = await Product.find({category, subCategory}).select('-description -details -reviews -__v').exec();
         } else if (category && !subCategory) {
-            products = await Product.find({category}).select({name: 1, price: 1, imageUrl: 1, category: 1});
+            products = await Product.find({category}).select('name price imageUrl category').exec();
         } else {
-            products = await Product.find().select({name: 1, price: 1, imageUrl: 1});
+            products = await Product.find().select('name price imageUrl').exec();
         }
         totalCount = products.length;
         res.status(200).json({products, totalCount});

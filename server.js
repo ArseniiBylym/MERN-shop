@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-// const morgan = require('morgan');
 require('dotenv').config();
 const {red} = require('colors/safe');
 
@@ -11,10 +10,8 @@ const {MONGO_DB_URI} = process.env;
 const app = express();
 
 // Middlevares
-// app.use(morgan('tiny'));
 app.use(helmet());
 app.use(bodyParser.json({limit: '50mb'}));
-// app.use(express.json({limit: '16mb'}));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -41,7 +38,6 @@ app.use('/api/cart', require('./routes/cart'));
 app.use('/api/type', require('./routes/type'));
 
 // Error handling
-
 app.use((err, req, res, next) => {
     console.log(red(err));
     const {statusCode = 500, message, errors} = err;

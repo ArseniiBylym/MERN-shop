@@ -4,5 +4,13 @@
         z-index: 200;
         top: 20px;
         right: 50px;
+        @media screen and (max-width: 768px) {
+            position: static;
+        }
+    }
+    .carousel-indicators {
+        @media screen and (max-width: 768px) {
+            position: static;
+        }
     }
 }

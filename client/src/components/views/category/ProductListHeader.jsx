@@ -6,7 +6,7 @@ import {Modal} from '../../modal';
 export const ProductListHeader = props => {
     const {sortOrder, sortOptions, sortDirrection, sortDirrectionHandler, onChangeHandler, category, subCategory, isAdmin} = props;
     return (
-        <div className="ProductList__header d-flex flex-row align-items-center justify-content-around p-2 ">
+        <div className="ProductList__header d-flex flex-row align-items-center justify-content-start p-2 ">
             <div className="sort-select">
                 <span className="mr-3">Sort by: </span>
                 <Select name="sortOrder" selectedValue={sortOrder} selectList={sortOptions} onChange={onChangeHandler} />
@@ -16,7 +16,7 @@ export const ProductListHeader = props => {
                 </div>
             </div>
             {isAdmin && (
-                <div className="admin-button">
+                <div className="admin-button ml-auto">
                     <Modal.ProductItem category={category} subCategory={subCategory} />
                 </div>
             )}

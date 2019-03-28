@@ -30,12 +30,12 @@ export const Product = withRouter(
                             {product.salePrice ? <div className="saleLabel saleLabel__topLeft">SALE</div> : null}
                             <Modal.ImageDetails imageUrl={product.imageUrl} />
                         </div>
-                        <div className="byeSection col-12 col-md-3 p-2 py-3 text-center">
+                        <div className="buySection col-12 col-md-3 p-2 py-3 text-center">
                             <h5 className="price mb-2 rounded p-2 px-4 ">
                                 <span className={product.salePrice ? 'text-crossed' : ''}>$ {product.price.toFixed(2)}</span>
                                 {product.salePrice && <span className="text-danger ml-1">$ {product.salePrice.toFixed(2)}</span>}
                             </h5>
-                            <Modal.AddToCart product={product} text="Bye now" />
+                            <Modal.AddToCart product={product} text="Buy now" />
                         </div>
                     </div>
                     <div className="Product__details row m-3">
