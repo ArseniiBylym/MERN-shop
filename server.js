@@ -19,14 +19,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static('client/build'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
 
 // Main routes
 app.use('/api/user', require('./routes/user'));
@@ -42,6 +34,14 @@ app.use((err, req, res, next) => {
     const {statusCode = 500, message, errors} = err;
     return res.status(statusCode).json({message, errors});
 });
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 mongoose
     .connect(MONGO_DB_URI, {useNewUrlParser: true})
