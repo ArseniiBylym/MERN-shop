@@ -12,7 +12,8 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint ./",
-    "generate-api-docs": "apidoc -i docs/templates/ -o docs/api"
+    "generate-api-docs": "apidoc -i docs/templates/ -o docs/api",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Arsenii Bylym",
   "license": "MIT",

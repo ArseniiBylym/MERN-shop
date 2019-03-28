@@ -17,14 +17,14 @@ export const URL_PATH = {
 
 class FetchApi {
     get = (url, withToken = false, params = undefined) => {
-        return axios.get(BASE_URL + url, {
+        return axios.get(url, {
             headers: withToken ? this.authUserHeaders() : this.commonUserHeaders(),
             params,
         });
     };
 
     post = (url, data) => {
-        return axios(BASE_URL + url, {
+        return axios(url, {
             method: 'post',
             headers: this.authUserHeaders(),
             data: JSON.stringify(data),
@@ -32,7 +32,7 @@ class FetchApi {
     };
 
     put = (url, data) => {
-        return axios(BASE_URL + url, {
+        return axios(url, {
             method: 'put',
             headers: this.authUserHeaders(),
             data: JSON.stringify(data),
@@ -40,7 +40,7 @@ class FetchApi {
     };
 
     delete = url => {
-        return axios(BASE_URL + url, {
+        return axios(url, {
             method: 'delete',
             headers: this.authUserHeaders(),
         });
