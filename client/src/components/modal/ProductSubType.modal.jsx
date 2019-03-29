@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useRef, useContext} from 'react';
 import {Input, FileInput, Radiobutton} from '../form';
-import {ImagePreview} from '../views';
+import {ImagePreview, Spinner} from '../views';
 import {ProductAction} from '../../actions/index';
 import {NotificationStore} from '../../stores';
 import {toBase64} from '../../utils/helpers';
@@ -15,6 +15,7 @@ const defaultState = {
 export const ProductSubType = props => {
     const [state, setState] = useState({...defaultState});
     const notificationStore = useContext(NotificationStore);
+    const [isFetching, setIsFetching] = useState(false);
 
     const radioInputs = [{label: 'Select file', value: 'file'}, {label: 'Select URL', value: 'url'}];
 
@@ -31,13 +32,19 @@ export const ProductSubType = props => {
 
     const saveClickHandler = async () => {
         if (!state.name || (!state.imageFile && !state.imageURL)) return false;
-        await ProductAction.addSubCategory(props.groupName, {
-            name: state.name,
-            image: state.imageType === 'file' ? state.imageFile : state.imageURL,
-        });
-        notificationStore.addNotification('New product category was successfully added', 'success');
-
-        closeButton.current.click();
+        try {
+            setIsFetching(true);
+            await ProductAction.addSubCategory(props.groupName, {
+                name: state.name,
+                image: state.imageType === 'file' ? state.imageFile : state.imageURL,
+            });
+            notificationStore.addNotification('New product category was successfully added', 'success');
+        } catch (error) {
+            notificationStore.addNotification('Product category creation failed. Try again', 'danger');
+        } finally {
+            setIsFetching(false);
+            closeButton.current.click();
+        }
     };
 
     const onChangeHandler = async e => {
@@ -85,12 +92,13 @@ export const ProductSubType = props => {
                                 <Input value={state.imageURL} name="imageURL" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Image URL" />
                             )}
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" ref={closeButton} onClick={() => resetState()} className="btn btn-secondary" data-dismiss="modal">
+                        <div className="modal-footer justify-content-center">
+                            {isFetching && <Spinner size="40px" />}
+                            <button type="button" ref={closeButton} onClick={() => resetState()} className="btn btn-secondary ml-auto" data-dismiss="modal">
                                 Close
                             </button>
-                            <button type="button" onClick={saveClickHandler} className="btn btn-primary">
-                                Save
+                            <button type="button" onClick={saveClickHandler} className="btn btn-primary" disabled={isFetching}>
+                                {isFetching ? 'Saving' : 'Save'}
                             </button>
                         </div>
                     </div>

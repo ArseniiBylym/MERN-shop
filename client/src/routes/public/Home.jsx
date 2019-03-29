@@ -1,16 +1,35 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaFacebook, FaInstagram, FaSkype, FaSlack, FaViber} from 'react-icons/fa';
-import {SaleContainer} from '../../components/views';
+import {SaleContainer, Spinner} from '../../components/views';
 import {ProductStore} from '../../stores';
 import {ProductAction} from '../../actions';
 
 export const Home = () => {
+    const [isFetching, setIsFetching] = useState(false);
+    const [fetchedSuccess, setFetchedSuccess] = useState(false);
+    const [fetchedFailed, setFetchedFailed] = useState(false);
+
+    const loadSaleProduct = async () => {
+        try {
+            setIsFetching(true);
+            await ProductAction.getSaleProduct();
+            setFetchedSuccess(true);
+        } catch (error) {
+            setFetchedFailed(true);
+        } finally {
+            setIsFetching(false);
+        }
+    };
+
     useEffect(() => {
-        ProductAction.getSaleProduct();
+        loadSaleProduct();
     }, []);
+
+    if (isFetching) return <Spinner />;
     return (
         <div className="Home">
-            <SaleContainer productStore={ProductStore} />
+            {fetchedSuccess && <SaleContainer productStore={ProductStore} />}
+            {fetchedFailed && <h2>No found sale action products</h2>}
             <div className="container">
                 <footer className="bg-dark p-2 pt-4 text-light w-100 row m-0">
                     <div className="col-12 col-md-6 text-center">

@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useRef, useContext} from 'react';
 import {Input, FileInput, Radiobutton, Textarea} from '../form';
-import {ImagePreview} from '../views';
+import {ImagePreview, Spinner} from '../views';
 import {ProductAction} from '../../actions';
 import {toBase64} from '../../utils/helpers';
 import {NotificationStore} from '../../stores';
@@ -21,6 +21,7 @@ const defaultState = {
 export const ProductItem = ({category, subCategory}) => {
     const [state, setState] = useState({...defaultState});
     const notificationStore = useContext(NotificationStore);
+    const [isFetching, setIsFetching] = useState(false);
 
     const radioInputs = [{label: 'Select file', value: 'file'}, {label: 'Select URL', value: 'url'}];
 
@@ -37,21 +38,27 @@ export const ProductItem = ({category, subCategory}) => {
 
     const saveClickHandler = async () => {
         const {name, description, price, salePrice, quantity, manufacture, details} = state;
-        await ProductAction.addProduct(category, subCategory, {
-            name,
-            description,
-            price,
-            salePrice,
-            quantity,
-            manufacture,
-            category,
-            subCategory,
-            details,
-            imageUrl: state.imageType === 'file' ? state.imageFile : state.imageURL,
-        });
-        notificationStore.addNotification('New product was successfully added', 'success');
-
-        closeButton.current.click();
+        try {
+            setIsFetching(true);
+            await ProductAction.addProduct(category, subCategory, {
+                name,
+                description,
+                price,
+                salePrice,
+                quantity,
+                manufacture,
+                category,
+                subCategory,
+                details,
+                imageUrl: state.imageType === 'file' ? state.imageFile : state.imageURL,
+            });
+            notificationStore.addNotification('New product was successfully added', 'success');
+        } catch (error) {
+            notificationStore.addNotification('Failed product add', 'danger');
+        } finally {
+            setIsFetching(false);
+            closeButton.current.click();
+        }
     };
 
     const onChangeHandler = async e => {
@@ -116,12 +123,13 @@ export const ProductItem = ({category, subCategory}) => {
                             <Textarea value={state.details} name="details" onChange={onChangeHandler} onKeyUp={onKeyUpHandler} labelText="Details" />
                             {imageSelector()}
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" ref={closeButton} onClick={() => resetState()} className="btn btn-secondary" data-dismiss="modal">
+                        <div className="modal-footer justify-content-center">
+                            {isFetching && <Spinner size="40px" />}
+                            <button type="button" ref={closeButton} onClick={() => resetState()} className="btn btn-secondary ml-auto" data-dismiss="modal">
                                 Close
                             </button>
                             <button type="button" onClick={saveClickHandler} className="btn btn-primary" disabled={isButtonDisabled()}>
-                                Save
+                                {isFetching ? 'Saving' : 'Save'}
                             </button>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 export * from './common/Icon';
 export * from './common/ImagePreview';
+export * from './common/Spinner';
 
 export * from './category/CategoryGrid';
 export * from './category/ProductList';

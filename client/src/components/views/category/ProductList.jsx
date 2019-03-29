@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router';
 import {observer} from 'mobx-react-lite';
 import {toJS} from 'mobx';
-import {ProductAction} from '../../../actions/index';
-import {ProductListHeader, ProductCard} from '..';
+import {ProductAction} from '../../../actions';
+import {ProductListHeader, ProductCard, Spinner} from '..';
 import {UserStore} from '../../../stores/index';
 
 export const ProductList = withRouter(
@@ -16,10 +16,26 @@ export const ProductList = withRouter(
             sortDirrection: true,
         });
 
+        const [isFetching, setIsFetching] = useState(false);
+        const [fetchedSuccess, setFetchedSuccess] = useState(false);
+        const [fetchedFailed, setFetchedFailed] = useState(false);
+
+        const loadProductList = async () => {
+            try {
+                setIsFetching(true);
+                await ProductAction.getProductList({category, subCategory});
+                setFetchedSuccess(true);
+            } catch (error) {
+                setFetchedFailed(true);
+            } finally {
+                setIsFetching(false);
+            }
+        };
+
         const sortOrderOptions = [{name: 'Name', value: 'name'}, {name: 'Price', value: 'price'}];
 
         useEffect(() => {
-            ProductAction.getProductList({category, subCategory});
+            loadProductList();
             return () => {
                 ProductAction.clearProductList();
             };
@@ -58,20 +74,23 @@ export const ProductList = withRouter(
             });
         };
 
-        return (
-            <div className="ProductList">
-                <ProductListHeader
-                    sortOrder={state.sortOrder}
-                    sortDirrection={state.sortDirrection}
-                    sortDirrectionHandler={sortDirrectionHandler}
-                    sortOptions={sortOrderOptions}
-                    onChangeHandler={onChangeHandler}
-                    category={category}
-                    subCategory={subCategory}
-                    isAdmin={UserStore.isAdmin}
-                />
-                {products()}
-            </div>
-        );
+        if (isFetching) return <Spinner paddingTop="100px" />;
+        if (fetchedFailed) return <h2>No found sale action products</h2>;
+        if (fetchedSuccess)
+            return (
+                <div className="ProductList">
+                    <ProductListHeader
+                        sortOrder={state.sortOrder}
+                        sortDirrection={state.sortDirrection}
+                        sortDirrectionHandler={sortDirrectionHandler}
+                        sortOptions={sortOrderOptions}
+                        onChangeHandler={onChangeHandler}
+                        category={category}
+                        subCategory={subCategory}
+                        isAdmin={UserStore.isAdmin}
+                    />
+                    {products()}
+                </div>
+            );
     }),
 );
